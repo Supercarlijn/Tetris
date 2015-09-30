@@ -5,27 +5,13 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using System;
 
-/*
- * A class for representing the game world.
- */
 class GameWorld
 {
-    /*
-     * enum for different game states (playing or game over)
-     */
     enum GameState
     {
         Playing, GameOver
     }
-
-    /*
-     * screen width and height
-     */
     int screenWidth, screenHeight;
-
-    /*
-     * random number generator
-     */
     Random random;
 
     /*
