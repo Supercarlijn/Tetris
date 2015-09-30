@@ -13,25 +13,9 @@ class GameWorld
     }
     int screenWidth, screenHeight;
     Random random;
-
-    /*
-     * main game font
-     */
     SpriteFont font;
-
-    /*
-     * sprite for representing a single tetris block element
-     */
     Texture2D block;
-
-    /*
-     * the current game state
-     */
     GameState gameState;
-
-    /*
-     * the main playing grid
-     */
     TetrisGrid grid;
 
     public GameWorld(int width, int height, ContentManager Content)
@@ -65,9 +49,6 @@ class GameWorld
         spriteBatch.End();    
     }
 
-    /*
-     * utility method for drawing text on the screen
-     */
     public void DrawText(string text, Vector2 positie, SpriteBatch spriteBatch)
     {
         spriteBatch.DrawString(font, text, positie, Color.Blue);
