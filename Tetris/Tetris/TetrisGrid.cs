@@ -35,12 +35,12 @@ class TetrisGrid
     public bool CheckPlayField()
     {
         //Controleert of de rij onder tetrisblokje bezet is of niet en of onderste rij blokje erin past, geeft waarde false terug als het niet past en true als het wel past
-        for (int i = blockPosition.X; i < block.Width; i += gridBlock.Width)    //Gaat alle blokken van het speelveld af die onder het tetrisblokje zitten
+        for (int i = blockPosition.GetLength(1); i < blockForm.GetLength(1); i ++)    //Gaat alle blokken van het speelveld af die onder het tetrisblokje zitten
         {
             int x = i;  //x-coördinaat van een blok van het speelveld onder het tetrisblokje
-            if (occupiedField[blockPosition.Y + block.Height, x] != Color.White) //Als rij onder blokje op de plek bezet is
+            if (occupiedField[blockPosition.Length + blockForm.Length, x] != Color.White) //Als rij onder blokje op de plek bezet is
             {
-                if (blockForm[blockPosition.Y + block.Height - gridBlock.Height, x] == false) //Als onderste rij van het tetrisblokje op de plek boven de bezette plek onbezet is, false is hier onbezet
+                if (blockForm[blockPosition.Length + blockForm.Length - 1, x] == false) //Als onderste rij van het tetrisblokje op de plek boven de bezette plek onbezet is, false is hier onbezet
                 {
                 }
                 else
@@ -51,22 +51,22 @@ class TetrisGrid
             else    //Als rij onder tetrisblokje op de plek onbezet is
             {
             }
-            if(i == block.Width - gridBlock.Width)    //Als aan het einde van de for-loop nog steeds elke plek past
+            if(i == blockForm.GetLength(1) - 1)    //Als aan het einde van de for-loop nog steeds elke plek past
             {
                 return true;   //Het tetristblokje past en kan verder naar beneden bewegen
             }
         }
-        //BLOCKPOSITION (BESTAAT NOG NIET) = IS DE LINKSBOVEN X,Y COORDINAAT VAN BLOCK
+        //BLOCKPOSITION (BESTAAT NOG NIET) = IS DE LINKSBOVEN X,Y COORDINAAT (IN BLOCKFORM ARRAY) VAN BLOCK
         //BLOCKFORM (BESTAAT NOG NIET) = DE ARRAY DIE BIJHOUDT HOE HET TETRISBLOKJE GEDRAAIT IS EN WAT DE VORM IS EN DUS WAT IE BEZET HOUDT
         //BLOCK (BESTAAT NOG NIET) = HET BLOK ZELF DAT IN DE ARRAY (BLOCKFORM) ZIT (BLOCK VULT NIET DE HELE ARRAY OP, HOUDT NIET DE HELE BLOCKFORM BEZET DUS VANDAAR DAT HIER EEN APARTE VARIABELE VOOR GEBRUIKT MOET WORDEN)
     }
 
-    public void FillOccupiedField(Color col, Vector2 coör)
+    public void FillOccupiedField(Color col, int column, int row)
     {
         //Vult de occupiedField als iets bezet moet zijn op het speelveld
         Color color = col;
-        int x = (int)coör.X;
-        int y = (int)coör.Y;
+        int x = column;
+        int y = row;
         if (occupiedField[y, x] != Color.White) //Bescherming zodat je niet iets kan vullen met een kleur terwijl de plek al gevuld is
             return;
         if (color == Color.White) //Bescherming: deze methode is niet bedoeld om de occupiedField weer "leeg" te maken
