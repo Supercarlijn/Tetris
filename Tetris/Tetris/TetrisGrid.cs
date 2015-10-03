@@ -35,7 +35,7 @@ class TetrisGrid
     public bool CheckPlayField()
     {
         //Controleert of de rij onder tetrisblokje bezet is of niet en of onderste rij blokje erin past, geeft waarde false terug als het niet past en true als het wel past
-        for (int i = blockPosition.X; i <  block.Width; i+= gridBlock.Width)    //Gaat alle blokken van het speelveld af die onder het tetrisblokje zitten
+        for (int i = blockPosition.X; i < block.Width; i += gridBlock.Width)    //Gaat alle blokken van het speelveld af die onder het tetrisblokje zitten
         {
             int x = i;  //x-coördinaat van een blok van het speelveld onder het tetrisblokje
             if (occupiedField[blockPosition.Y + block.Height, x] != Color.White) //Als rij onder blokje op de plek bezet is
@@ -61,9 +61,9 @@ class TetrisGrid
         //BLOCK (BESTAAT NOG NIET) = HET BLOK ZELF DAT IN DE ARRAY (BLOCKFORM) ZIT (BLOCK VULT NIET DE HELE ARRAY OP, HOUDT NIET DE HELE BLOCKFORM BEZET DUS VANDAAR DAT HIER EEN APARTE VARIABELE VOOR GEBRUIKT MOET WORDEN)
     }
 
-    public void FillOccupiedField (Color col, Vector2 coör)
+    public void FillOccupiedField(Color col, Vector2 coör)
     {
-        //Vult de occupiedFields als iets bezet moet zijn op het speelveld
+        //Vult de occupiedField als iets bezet moet zijn op het speelveld
         Color color = col;
         int x = (int)coör.X;
         int y = (int)coör.Y;
@@ -94,7 +94,7 @@ class TetrisGrid
         {
             for (int y = 0; y < 20; y++)
             {
-                spriteBatch.Draw(playField[y, x], new Vector2(x * gridBlock.Width, y * gridBlock.Height), Color.White);
+                spriteBatch.Draw(playField[y, x], new Vector2(x * gridBlock.Width, y * gridBlock.Height), occupiedField[y, x]);
             }
         }
         
