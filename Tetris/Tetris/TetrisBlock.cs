@@ -16,19 +16,19 @@ class TetrisBlock
     {
         if (inputHelper.KeyPressed(Keys.Up))
         {
-            //draaien
+            //DRAAIEN
         }
         else if (inputHelper.KeyPressed(Keys.Down))
         {
-            //sneller naar beneden
+            //SNELLER NAAR BENEDEN
         }
         else if (inputHelper.KeyPressed(Keys.Left))
         {
-            //move left
+            //MOVE LEFT
         }
         else if (inputHelper.KeyPressed(Keys.Right))
         {
-            //move right
+            //MOVE RIGHT
         }
     }
 

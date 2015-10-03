@@ -1,7 +1,7 @@
-﻿class Block1 : TetrisBlock
+﻿/*class Block1 : TetrisBlock
 {
-    /*public Block1() :base
+    public Block1() :base
     {
 
-    }*/
-}
+    }
+}*/
