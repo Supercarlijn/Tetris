@@ -1,78 +1,76 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 class TetrisBlock
 {
-    Texture2D sprite;
-    public bool[,] blockForm; //De array die bijhoudt hoe het tetrisblokje gedraait is en wat de vorm is en dus wat ie bezet houdt
-    public Vector2 blockFormPosition, blockPosition; //blockFormP= de positie van blockForm in speelveld (in pixels), blockP = positie block in speelveld (in pixels)
-    
-    public TetrisBlock (int arrayLength, int x, int y, int s, int t)
+    protected Color[,] blockForm;                       //Houdt bij wat de vorm is van een blok; Color.White is onbezet
+    protected Texture2D[,] blockFormTexture;            //Array met de textureblokjes
+    Vector2 blockFormPosition;                           //Positie van blockFormTexture
+
+    public TetrisBlock(Color color, Texture2D blocksprite,
+        int maxrow, int maxcolumn,
+             int a, int b, int c, int d, int e, int f) //LANGE CONSTRUCTOR MOET NOG KIJKEN HOE DIT OPGELOST KAN WORDEN
     {
-        blockForm = new bool[arrayLength, arrayLength]; //Wordt gevuld in de constructor van de individuele blokjes
-        blockFormPosition = new Vector2(x, y); //TWIJFEL NOG OF BLOCKFORMPOSITION ECHT NODIG IS OF DAT JE HET MET ALLEEN BLOCKPOSITION KAN DOEN
-        blockPosition = new Vector2(s, t);
+        blockForm = new Color[4, 4];
+        if (maxrow == 0 && maxcolumn == 0)
+        {
+            blockForm[0, a] = color;
+            blockForm[1, b] = color;
+            blockForm[c, d] = color;
+            blockForm[e, f] = color;
+        }
+        for (int i = 0; i < maxrow; i++)                     //Vult in eerste instantie hele array met onbezet
+            for (int j = 1; j < maxcolumn; j++)
+                blockForm[i, j] = Color.White;
+        for (int i = 0; i < maxrow; i++)                     //Geeft aan welke delen bezet zijn en met welke kleur
+            for (int j = 1; j < maxcolumn; j++)
+            {
+                blockForm[i, j] = color;
+            }
+        blockFormTexture = new Texture2D[4, 4];
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
+                blockFormTexture[i, j] = blocksprite;
+        blockFormPosition = new Vector2(5 * TetrisGrid.cellwidth, 0);   //Startpositie van blockFormTexture
     }
 
-    protected void HandleInput (InputHelper inputHelper, TetrisBlock block, Color color) //parameter block is het blokje dat nu bewogen moet worden
+    public void HandleInput(InputHelper inputHelper)
     {
-        if (inputHelper.KeyPressed(Keys.Up) && TetrisGrid.CheckPlayField(block))
+        if (inputHelper.KeyPressed(Keys.Up))                            //Roteert blokje
         {
-            //DRAAIEN (RECHTSOM)
-            blockForm = RotateArray(blockForm, blockForm.Length);
-            if (/*als het niet mogelijk is om rechtsom te draaien*/)
-            {
-                blockForm = RotateArrayLeft(blockForm, blockForm.Length); //DRAAIEN (LINKSOM)
-            }
-            //OCCUPIEDFIELD MOET NOG GEUPDATE WORDEN, ZODAT DIE VAN DE BEWEGING AFWEET
+            Color[,] result = new Color[4, 4];
+            for (int i = 0; i < 4; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
+                for (int j = 0; j < 4; j++)
+                {
+                    result[i, j] = blockForm[3 - j, i];
+                }
+            for (int i = 0; i < 4; i++)
+                for (int j = 0; j < 4; j++)
+                    blockForm[i, j] = result[i, j];
         }
-        else if (inputHelper.KeyPressed(Keys.Down) && TetrisGrid.CheckPlayField(block))
+        else if (inputHelper.KeyPressed(Keys.Down))                     //Beweegt naar beneden
         {
-            //Naar beneden
-            blockFormPosition += new Vector2(0, 1);
-            blockPosition += new Vector2(0, 1);
-            //OCCUPIEDFIELD MOET NOG GEUPDATE WORDEN, ZODAT DIE VAN DE BEWEGING AFWEET
+            blockFormPosition += new Vector2(0, 1 * TetrisGrid.cellheight);
         }
-        else if (inputHelper.KeyPressed(Keys.Left) && TetrisGrid.CheckPlayField(block))
+        else if (inputHelper.KeyPressed(Keys.Left))                     //Beweegt naar links
         {
-            //Move left
-            blockFormPosition += new Vector2(-1, 0);
-            blockPosition += new Vector2(-1, 0);
-            //OCCUPIEDFIELD MOET NOG GEUPDATE WORDEN, ZODAT DIE VAN DE BEWEGING AFWEET
+            blockFormPosition += new Vector2(-1 * TetrisGrid.cellwidth, 0);
         }
-        else if (inputHelper.KeyPressed(Keys.Right) && TetrisGrid.CheckPlayField(block))
+        else if (inputHelper.KeyPressed(Keys.Right))                    //Beweegt naar rechts
         {
-            //Move right
-            blockFormPosition += new Vector2(1, 0);
-            blockPosition += new Vector2(1, 0);
-            //OCCUPIEDFIELD MOET NOG GEUPDATE WORDEN, ZODAT DIE VAN DE BEWEGING AFWEET
+            blockFormPosition += new Vector2(1 * TetrisGrid.cellwidth, 0);
         }
     }
 
-    static bool[,] RotateArray(bool[,] array, int p)
+    public void Draw(GameTime gameTime, SpriteBatch s)
     {
-        bool[,] result = new bool[p, p];
-        for (int x = 0; x < p; x++)
-        {
-            for (int y = 0; y < p; y++)
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
             {
-                result[y, x] = array[p - x - 1, y];
+                s.Draw(blockFormTexture[i, j], new Vector2(j * TetrisGrid.cellwidth, i * TetrisGrid.cellheight) + blockFormPosition, blockForm[i, j]);
+                //blabla + blockFormPosition; blabla is de afstand van de blokken IN blockFormTexture
             }
-        }
-        return result;
-    }
-
-    static bool[,] RotateArrayLeft(bool[,] array, int arrayLength)
-    {
-        bool[,] result = new bool[arrayLength, arrayLength];
-        for (int x = 0; x < arrayLength; x++)
-        {
-            for (int y = 0; y < arrayLength; y++)
-            {
-                result [y, x] = array[arrayLength - x + 1, y];
-            }
-        }
-        return result;
     }
 }
