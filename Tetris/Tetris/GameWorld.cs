@@ -81,7 +81,7 @@ class GameWorld
     {
         spriteBatch.Begin();
         grid.Draw(gameTime, spriteBatch);
-        block7.Draw(gameTime, spriteBatch);
+        block3.Draw(gameTime, spriteBatch);
         spriteBatch.End();
     }
 

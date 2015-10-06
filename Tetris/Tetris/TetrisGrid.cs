@@ -26,46 +26,29 @@ class TetrisGrid
                 occupied[i, j] = Color.White;
         this.Clear();
     }
-        
-    //CHECKPLAYFIELD IS NOG NIET AANGEPAST AAN MIJN NIEUWE CODE VERSIE DUS ER STAAN VARIABELEN IN DIE NIET MEER BESTAAN
 
-    /*public static bool CheckPlayField(TetrisBlock block)    //parameter block is het blokje waarvan de omgeving gecontroleerd moet worden
+    public static bool IsOutOfField(Vector2 blockFormPosition, Vector2 blockPosition, int blockheight, int blockwidth) //werkt nog niet bij block 3
     {
-        //Controleert of de omgeving van tetrisblokje bezet is of niet en of onderste rij blokje erin past, geeft waarde false terug als het niet past en true als het wel past
-        //WERKT NOG NIET ALS BLOCKFORM GEROTEERD IS
-        for (int i = (int)block.blockPosition.X; i < block.blockForm.GetLength(1) + (int)block.blockPosition.X; i ++)    //Gaat alle blokken van het speelveld af die onder het tetrisblokje zitten
-        {
-            int x = i;  //x-coördinaat van een blok van het speelveld onder het tetrisblokje
-            if (occupiedField[(int)block.blockPosition.Y + block.blockForm.GetLength(0), x] != Color.White) //Als rij onder blokje op de plek bezet is
-            {
-                if (block.blockForm[(int)block.blockPosition.Y - (int)block.blockFormPosition.Y + block.blockForm.GetLength(0) - 1, x] == false) //Als onderste rij van het tetrisblokje op de plek boven de bezette plek onbezet is, false is hier onbezet
-                {
-                }
-                else
-                {
-                    return false;    //Plek is bezet en het tetrisblokje kan hierdoor niet verder naar beneden
-                }
-            }
-            else    //Als rij onder tetrisblokje op de plek onbezet is
-            {
-            }
-            if(i == block.blockForm.GetLength(1) + (int)block.blockPosition.X - 1)    //Als aan het einde van de for-loop nog steeds elke plek past
-            {
-                return true;   //Het tetristblokje past en kan verder naar beneden bewegen
-            }
-        }
-        return false;   //als de for-loop niet kan, is resultaat false
-        //MOET NOG CONTROLE AAN DE ZIJKANTEN VAN TETRISBLOKJE TOEVOEGEN
+        //PROBLEEM: HIER PAKT HIJ DE OUDE BLOCKWIDTH, BLOCKHEIGHT EN BLOCKPOSITION NIET DEGENE NA ROTATIE, HIJ PAKT WEL NIEUWE BLOCKFORMPOSITION
+        //Console.WriteLine(blockwidth / TetrisGrid.cellwidth);
+        return ((blockFormPosition.X < -blockPosition.X * cellwidth) ||                                 //Kijkt of block aan de linkerkant eruit is
+            (blockFormPosition.X > 11 * cellwidth - blockwidth + blockPosition.X) ||                    //Kijkt of block aan de rechterkant eruit is
+            (blockFormPosition.Y > 20 * cellheight - (blockheight + blockPosition.Y)));                 //Kijkt of block aan de onder kant eruit is
+    }
+
+    /*public static bool CannotRotate()
+    {
+        return ;
     }*/
 
     //NOG AANGEPAST WORDEN AAN NIEUWE VERSIE VAN MIJN CODE
-    public static void FillOccupiedField(Color col, int maxcolumn, int maxrow, Vector2 blockPosition)
+    /*public static void FillOccupiedField(Color col, int maxcolumn, int maxrow, Vector2 blockPosition)
     {
         //Vult de occupiedField als iets bezet moet zijn op het speelveld
         Color color = col;
         /*if (occupiedField[y, x] != Color.White) //Bescherming zodat je niet iets kan vullen met een kleur terwijl de plek al gevuld is
             return;*/
-        if (color == Color.White) //Bescherming: deze methode is niet bedoeld om de occupiedField weer "leeg" te maken
+        /*if (color == Color.White) //Bescherming: deze methode is niet bedoeld om de occupiedField weer "leeg" te maken
             return;
         for (int i = (int)blockPosition.X; i < maxcolumn; i++ )
         {
@@ -77,15 +60,15 @@ class TetrisGrid
                 Console.WriteLine(x);
             }
         }
-    }
+    }*/
 
     //NOG AANGEPAST WORDEN AAN NIEUWE VERSIE VAN MIJN CODE
-    public static void ClearOccupiedField(int column, int row)
+    /*public static void ClearOccupiedField(int column, int row)
     {
         int j = column;
         int i = row;
         occupied[i, j] = Color.White;
-    }
+    }*/
 
     public int Width
     {
