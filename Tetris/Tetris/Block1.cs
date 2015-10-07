@@ -1,6 +1,6 @@
-﻿class Block1 : TetrisBlock
+﻿class Block1
 {
-    /*public Block1() :base
+    /*public Block1()
     {
 
     }*/
