@@ -7,15 +7,15 @@ class Block3 : TetrisBlock
     int blockheight, blockwidth;                                    //Hoogte en breedte van het blokje in blockFormTexture
     
     public Block3(Color color, Texture2D sprite)
-        : base(color, sprite, 0, 0, 2, 1, 1, 2, 1, 3)
+        : base(color, sprite, 0, 0, 1, 0, 1, 1, 1, 2, 3)
     {
         blockwidth = 3 * TetrisGrid.cellwidth;
         blockheight = 2 * TetrisGrid.cellheight;
-        blockPosition = new Vector2(1, 0); ;
+        blockPosition = new Vector2(0, 0);
     }
 
     public void HandleInput(InputHelper inputHelper)
     {
-        base.HandleInput(inputHelper, blockwidth, blockheight, blockPosition, "block3");
+        base.HandleInput(inputHelper, blockwidth, blockheight, blockPosition, "block3", new Vector2(0,1));
     }
 }
