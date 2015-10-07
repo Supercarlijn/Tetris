@@ -72,7 +72,13 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Block1.cs" />
+    <Compile Include="Block\Block1.cs" />
+    <Compile Include="Block\Block2.cs" />
+    <Compile Include="Block\Block3.cs" />
+    <Compile Include="Block\Block4.cs" />
+    <Compile Include="Block\Block5.cs" />
+    <Compile Include="Block\Block6.cs" />
+    <Compile Include="Block\Block7.cs" />
     <Compile Include="GameWorld.cs" />
     <Compile Include="InputHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

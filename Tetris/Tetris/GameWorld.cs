@@ -17,13 +17,17 @@ class GameWorld
     Texture2D block, reset;
     GameState gameState;
     TetrisGrid grid;
-    /*Block1 block1;
-    Block2 block2;
-    Block3 block3;
-    Block4 block4;
-    Block5 block5;*/
+
     InputHelper inputHelper;
-    
+    Block1 block1;                          //Langwerpig blokje
+    Block2 block2;                          //Vierkant blokje
+    Block3 block3;                          //Driehoek blokje
+    Block4 block4;                          //Donderblokje naar rechts
+    Block5 block5;                          //Donderblokje naar links
+    Block6 block6;                          //Letter L
+    Block7 block7;                          //Omgekeerde letter L
+
+
     public GameWorld(int width, int height, ContentManager Content)
     {
         screenWidth = width;
@@ -35,6 +39,27 @@ class GameWorld
         reset = Content.Load<Texture2D>("block"); //RESET SPRITE HERE
         font = Content.Load<SpriteFont>("SpelFont");
         grid = new TetrisGrid(block);
+        Color color;                        //De kleur van het blokje
+        int p = Random.Next(6);
+        if (p == 0)                          //Bepaalt de kleur dmv de random generator
+            color = Color.Red;
+        else if (p == 1)
+            color = Color.Yellow;
+        else if (p == 2)
+            color = Color.Green;
+        else if (p == 3)
+            color = Color.Blue;
+        else if (p == 4)
+            color = Color.Purple;
+        else
+            color = Color.Orange;
+        block1 = new Block1(color, block);
+        block2 = new Block2(color, block);
+        block3 = new Block3(color, block);
+        block4 = new Block4(color, block);
+        block5 = new Block5(color, block);
+        block6 = new Block6(color, block);
+        block7 = new Block7(color, block);
     }
 
     public void Reset()
@@ -43,6 +68,13 @@ class GameWorld
 
     public void HandleInput(GameTime gameTime, InputHelper inputHelper)
     {
+        block1.HandleInput(inputHelper);
+        block2.HandleInput(inputHelper);
+        block3.HandleInput(inputHelper);
+        block4.HandleInput(inputHelper);
+        block5.HandleInput(inputHelper);
+        block6.HandleInput(inputHelper);
+        block7.HandleInput(inputHelper);
     }
 
     public void Update(GameTime gameTime)
@@ -84,8 +116,10 @@ class GameWorld
                 spriteBatch.Draw(reset, new Vector2((screenWidth / 2 + (9 * block.Width)), block.Height * 11), null, Color.Black, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
         }
-        //grid.Draw(gameTime, spriteBatch);
-        spriteBatch.End();    
+        //grid.Draw(gameTime, spriteBatch);  
+        grid.Draw(gameTime, spriteBatch);
+        block3.Draw(gameTime, spriteBatch);
+        spriteBatch.End();
     }
 
     public void DrawText(string text, Vector2 positie, SpriteBatch spriteBatch)

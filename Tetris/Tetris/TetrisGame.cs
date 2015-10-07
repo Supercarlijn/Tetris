@@ -14,7 +14,7 @@ class TetrisGame : Game
     }
 
     public TetrisGame()
-    {        
+    {
         GraphicsDeviceManager graphics = new GraphicsDeviceManager(this);
         this.Content.RootDirectory = "Content";
         graphics.PreferredBackBufferWidth = 800;
