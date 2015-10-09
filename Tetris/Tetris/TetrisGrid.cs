@@ -9,6 +9,7 @@ class TetrisGrid
     Texture2D gridblock;
     Vector2 position;                           //De positie van het grid
     public static int cellwidth, cellheight;                  //De afmetingen van één cel in grid
+    TetrisBlock tetrisBlock;
 
     public TetrisGrid(Texture2D b)
     {
@@ -27,19 +28,20 @@ class TetrisGrid
         this.Clear();
     }
 
-    public static bool IsOutOfField(Vector2 blockFormPosition, Vector2 blockPosition, int blockheight, int blockwidth) //werkt nog niet bij block 3
+    public static bool IsOutOfField(Vector2 blockFormPosition, Vector2 blockPosition, int blockwidth, int blockheight, Vector2 offset, int p)
     {
-        //PROBLEEM: HIER PAKT HIJ DE OUDE BLOCKWIDTH, BLOCKHEIGHT EN BLOCKPOSITION NIET DEGENE NA ROTATIE, HIJ PAKT WEL NIEUWE BLOCKFORMPOSITION
-        //Console.WriteLine(blockwidth / TetrisGrid.cellwidth);
         return ((blockFormPosition.X < -blockPosition.X * cellwidth) ||                                 //Kijkt of block aan de linkerkant eruit is
-            (blockFormPosition.X > 11 * cellwidth - blockwidth + blockPosition.X) ||                    //Kijkt of block aan de rechterkant eruit is
-            (blockFormPosition.Y > 20 * cellheight - (blockheight + blockPosition.Y)));                 //Kijkt of block aan de onder kant eruit is
+            (blockFormPosition.X > 12 * cellwidth - p * cellwidth + offset.X * cellwidth) ||            //Kijkt of block aan de rechterkant eruit is
+            (blockFormPosition.Y > 20 * cellheight - p * cellwidth + offset.Y * cellheight));           //Kijkt of block aan de onder kant eruit is
     }
 
-    /*public static bool CannotRotate()
+    public static bool CannotRotate(Vector2 blockFormPosition, Vector2 blockPosition, int blockwidth, int blockheight)
     {
-        return ;
-    }*/
+        return ((blockPosition.X + blockFormPosition.X < 0) ||
+            (blockPosition.X + blockwidth + blockFormPosition.X > 12 * cellwidth) ||
+            (blockPosition.Y + blockFormPosition.Y < 0) ||
+            (blockPosition.Y + blockheight + blockFormPosition.Y > 20 * cellheight));
+    }
 
     //NOG AANGEPAST WORDEN AAN NIEUWE VERSIE VAN MIJN CODE
     /*public static void FillOccupiedField(Color col, int maxcolumn, int maxrow, Vector2 blockPosition)
