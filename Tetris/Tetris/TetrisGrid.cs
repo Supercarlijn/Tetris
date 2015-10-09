@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 class TetrisGrid
 {
     Texture2D[,] grid;
-    Color[,] occupied;                          //Houdt bij welke plekken bezet zijn; Color.White is onbezet
+    static Color[,] occupied;                          //Houdt bij welke plekken bezet zijn; Color.White is onbezet
     Texture2D gridblock;
     Vector2 position;                           //De positie van het grid
     public static int cellwidth, cellheight;                  //De afmetingen van één cel in grid
@@ -30,47 +30,52 @@ class TetrisGrid
 
     public static bool IsOutOfField(Vector2 blockFormPosition, Vector2 blockPosition, int blockwidth, int blockheight, Vector2 offset, int p)
     {
-        return ((blockFormPosition.X < -blockPosition.X * cellwidth) ||                                 //Kijkt of block aan de linkerkant eruit is
+        return ((blockFormPosition.X + blockPosition.X * cellwidth < 0) ||                                 //Kijkt of block aan de linkerkant eruit is
             (blockFormPosition.X > 12 * cellwidth - p * cellwidth + offset.X * cellwidth) ||            //Kijkt of block aan de rechterkant eruit is
             (blockFormPosition.Y > 20 * cellheight - p * cellwidth + offset.Y * cellheight));           //Kijkt of block aan de onder kant eruit is
     }
 
-    public static bool CannotRotate(Vector2 blockFormPosition, Vector2 blockPosition, int blockwidth, int blockheight)
+    public static bool CannotRotate(Color[,] blockForm, Vector2 blockFormPosition, Vector2 blockPosition, int blockwidth, int blockheight, int p, Color color)
     {
         return ((blockPosition.X + blockFormPosition.X < 0) ||
-            (blockPosition.X + blockwidth + blockFormPosition.X > 12 * cellwidth) ||
-            (blockPosition.Y + blockFormPosition.Y < 0) ||
-            (blockPosition.Y + blockheight + blockFormPosition.Y > 20 * cellheight));
+                (blockPosition.X + blockwidth + blockFormPosition.X > 12 * cellwidth) ||
+                (blockPosition.Y + blockFormPosition.Y < 0) ||
+                (blockPosition.Y + blockheight + blockFormPosition.Y > 20 * cellheight));
     }
 
-    //NOG AANGEPAST WORDEN AAN NIEUWE VERSIE VAN MIJN CODE
-    /*public static void FillOccupiedField(Color col, int maxcolumn, int maxrow, Vector2 blockPosition)
+    public static bool CheckPlayField (int p, Vector2 blockFormPosition, Color[,] blockForm, Color color, Vector2 offset)    //CONTROLEERT OF EEN BLOKJE VERPLAATST HAD MOGEN WORDEN, GEEFT ALTIJD TRUE
     {
-        //Vult de occupiedField als iets bezet moet zijn op het speelveld
-        Color color = col;
-        /*if (occupiedField[y, x] != Color.White) //Bescherming zodat je niet iets kan vullen met een kleur terwijl de plek al gevuld is
-            return;*/
-        /*if (color == Color.White) //Bescherming: deze methode is niet bedoeld om de occupiedField weer "leeg" te maken
-            return;
-        for (int i = (int)blockPosition.X; i < maxcolumn; i++ )
-        {
-            for (int j = (int)blockPosition.Y; j < maxrow; j++)
+        for (int i = 0; i< p; i++)
+            for (int j = 0; j < p; j++)
             {
-                int y = p;
-                occupied[i, j] = color;
-                //Console.WriteLine(y);
-                Console.WriteLine(x);
+                if (blockForm[i, j] == color)
+                {
+                    if ((occupied[i + ((int)blockFormPosition.Y / cellheight), j + ((int)blockFormPosition.X / cellwidth)] != Color.White))   //SOMS LIGT DE INDEX BUITEN DE GRENZEN
+                    {
+                        return true;
+                    }
+                }
+                if((i == p - 1) && (j == p - 1))
+                {
+                    return false;
+                }
+            }
+        return true;
+    }
+
+    public static void FillOccupiedField(Color color, int p, Color[,] blockForm, Vector2 blockFormPosition, Vector2 offset)        //Vult de occupiedField als iets bezet moet zijn op het speelveld
+    {
+        for (int i = 0; i < p; i++)
+        {
+            for (int j = 0; j < p; j++)
+            {
+                if (blockForm[i, j] == color)
+                {
+                    occupied[i + ((int)blockFormPosition.Y / cellheight), j + ((int)blockFormPosition.X / cellwidth)] = color;     //SOMS LIGT DE INDEX BUITEN DE GRENZEN
+                }
             }
         }
-    }*/
-
-    //NOG AANGEPAST WORDEN AAN NIEUWE VERSIE VAN MIJN CODE
-    /*public static void ClearOccupiedField(int column, int row)
-    {
-        int j = column;
-        int i = row;
-        occupied[i, j] = Color.White;
-    }*/
+    }
 
     public int Width
     {

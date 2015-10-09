@@ -9,12 +9,14 @@ class TetrisBlock
     protected Texture2D[,] blockFormTexture;            //Array met de textureblokjes
     Vector2 blockFormPosition, position, offset;
     int timesturn, width, height, p;
+    Color color;
 
-    public TetrisBlock(Color color, Texture2D blocksprite,
+    public TetrisBlock(Color col, Texture2D blocksprite,
         int maxrow, int maxcolumn,
              int a, int b, int c, int d, int e, int f, int k) //LANGE CONSTRUCTOR MOET NOG KIJKEN HOE DIT OPGELOST KAN WORDEN
     {
         p = k;
+        color = col;
         blockForm = new Color[p, p];
         if (maxrow == 0)
         {
@@ -59,16 +61,60 @@ class TetrisBlock
             this.height = newheight;
             this.width = newwidth;
             this.position = CalculateBlockPosition(timesturn, this.width, block);
-            this.offset = SetOffset(this.width, this.height, this.position);
-            if(TetrisGrid.CannotRotate(blockFormPosition, this.position, this.width, this.height))  //DIT BEREKENT HIJ NOG NIET GOED
+            this.offset = SetOffset(this.width, this.height, this.position, block, offset);
+            if(TetrisGrid.CannotRotate(blockForm, blockFormPosition, this.position, this.width, this.height, p, color))
             {
+                if (!(block == "block1" || block == "block4" || block == "block5"))
+                {
+                    timesturn--;
+                    RotateLeft();
+                }
+                else
+                {
+                    if (timesturn == 1)
+                    {
+                        timesturn--;
+                        RotateLeft();
+                    }
+                    else
+                    {
+                        timesturn = 1;
+                        RotateRight(this.width, this.height, this.position, block);
+                    }
+                }
                 int oldheight = this.width;
                 int oldwidth = this.height;
                 this.width = oldwidth;
                 this.height = oldheight;
-                this.position = CalculateBlockPosition(timesturn-1, this.width, block);
-                this.offset = SetOffset(this.width, this.height, this.position);
-                RotateLeft(this.position);
+                this.position = CalculateBlockPosition(timesturn, this.width, block);
+                this.offset = SetOffset(this.width, this.height, this.position, block, this.offset);
+            }
+            else if(TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color, new Vector2(0,0)))
+            {
+                if (!(block == "block1" || block == "block4" || block == "block5"))
+                {
+                    timesturn--;
+                    RotateLeft();
+                }
+                else
+                {
+                    if (timesturn == 1)
+                    {
+                        timesturn--;
+                        RotateLeft();
+                    }
+                    else
+                    {
+                        timesturn = 1;
+                        RotateRight(this.width, this.height, this.position, block);
+                    }
+                }
+                int oldheight = this.width;
+                int oldwidth = this.height;
+                this.width = oldwidth;
+                this.height = oldheight;
+                this.position = CalculateBlockPosition(timesturn, this.width, block);
+                this.offset = SetOffset(this.width, this.height, this.position, block, this.offset);
             }
         }
         else if (inputHelper.KeyPressed(Keys.Down))                     //Beweegt naar beneden
@@ -81,9 +127,10 @@ class TetrisBlock
                 this.offset = offset;
             }
             blockFormPosition += new Vector2(0, 1 * TetrisGrid.cellheight);
-            if (TetrisGrid.IsOutOfField(blockFormPosition, this.position, this.width, this.height, this.offset, p))
+            if (TetrisGrid.IsOutOfField(blockFormPosition, this.position, this.width, this.height, this.offset, p) || (TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color, this.offset)))
             {
                 blockFormPosition -= new Vector2(0, 1 * TetrisGrid.cellheight);
+                TetrisGrid.FillOccupiedField(color, p, blockForm, blockFormPosition, this.offset);
             }
         }
         else if (inputHelper.KeyPressed(Keys.Left))                     //Beweegt naar links
@@ -98,7 +145,12 @@ class TetrisBlock
             blockFormPosition += new Vector2(-1 * TetrisGrid.cellwidth, 0);
             if (TetrisGrid.IsOutOfField(blockFormPosition, this.position, this.width, this.height, this.offset, p))
             {
-                blockFormPosition -= new Vector2(-1 * TetrisGrid.cellwidth, 0);
+                blockFormPosition += new Vector2(1 * TetrisGrid.cellwidth, 0);
+            }
+            if (TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color, this.offset))
+            {
+                blockFormPosition += new Vector2(1 * TetrisGrid.cellwidth, 0);
+                TetrisGrid.FillOccupiedField(color, p, blockForm, blockFormPosition, this.offset);
             }
         }
         else if (inputHelper.KeyPressed(Keys.Right))                    //Beweegt naar rechts
@@ -115,6 +167,11 @@ class TetrisBlock
             {
                 blockFormPosition -= new Vector2(1 * TetrisGrid.cellwidth, 0);
             }
+            if (TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color, this.offset))
+            {
+                blockFormPosition -= new Vector2(1 * TetrisGrid.cellwidth, 0);
+                TetrisGrid.FillOccupiedField(color, p, blockForm, blockFormPosition, this.offset);
+            }
         }
     }
 
@@ -122,7 +179,7 @@ class TetrisBlock
     {
         if (timesturn == 2 && (block == "block1" || block == "block4" || block == "block5"))    //Deze blokjes hoeven maar 2x te draaien
         {
-            RotateLeft(position);
+            RotateLeft();
             timesturn = 0;
         }
         else
@@ -139,7 +196,7 @@ class TetrisBlock
         }
     }
 
-    public void RotateLeft(Vector2 position)
+    public void RotateLeft()
     {
         Color[,] result = new Color[p, p];
         for (int i = 0; i < p; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
@@ -185,9 +242,16 @@ class TetrisBlock
         }
     }
 
-    public Vector2 SetOffset (int width, int height, Vector2 position)
+    public Vector2 SetOffset (int width, int height, Vector2 position, string block, Vector2 offset)
     {
-        return new Vector2(p - width / TetrisGrid.cellwidth - position.X, p - height / TetrisGrid.cellheight - position.Y);
+        if (timesturn == 0 && (block == "block1" || block == "block4" || block == "block5"))    //Deze blokjes hoeven maar 2x te draaien
+        {
+            return new Vector2(offset.Y, offset.X);
+        }
+        else
+        {
+            return new Vector2(p - width / TetrisGrid.cellwidth - position.X, p - height / TetrisGrid.cellheight - position.Y);
+        }
     }
 
     public void Draw(GameTime gameTime, SpriteBatch s)
