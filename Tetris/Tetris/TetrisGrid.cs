@@ -43,14 +43,14 @@ class TetrisGrid
                 (blockPosition.Y + blockheight + blockFormPosition.Y > 20 * cellheight));
     }
 
-    public static bool CheckPlayField (int p, Vector2 blockFormPosition, Color[,] blockForm, Color color, Vector2 offset)    //CONTROLEERT OF EEN BLOKJE VERPLAATST HAD MOGEN WORDEN, GEEFT ALTIJD TRUE
+    public static bool CheckPlayField (int p, Vector2 blockFormPosition, Color[,] blockForm, Color color, Vector2 offset)    //Controleert of een blokje verplaatst had mogen worden
     {
         for (int i = 0; i< p; i++)
             for (int j = 0; j < p; j++)
             {
                 if (blockForm[i, j] == color)
                 {
-                    if ((occupied[i + ((int)blockFormPosition.Y / cellheight), j + ((int)blockFormPosition.X / cellwidth)] != Color.White))   //SOMS LIGT DE INDEX BUITEN DE GRENZEN
+                    if ((occupied[i + ((int)blockFormPosition.Y / cellheight), j + ((int)blockFormPosition.X / cellwidth)] != Color.White))
                     {
                         return true;
                     }
@@ -71,7 +71,7 @@ class TetrisGrid
             {
                 if (blockForm[i, j] == color)
                 {
-                    occupied[i + ((int)blockFormPosition.Y / cellheight), j + ((int)blockFormPosition.X / cellwidth)] = color;     //SOMS LIGT DE INDEX BUITEN DE GRENZEN
+                    occupied[i + ((int)blockFormPosition.Y / cellheight), j + ((int)blockFormPosition.X / cellwidth)] = color;
                 }
             }
         }
