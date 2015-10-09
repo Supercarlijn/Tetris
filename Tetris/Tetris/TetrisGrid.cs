@@ -77,6 +77,36 @@ class TetrisGrid
         }
     }
 
+    public static bool RowFull(int i)               //Controleert of een rij vol is en verwijdert moet worden
+    {
+        for (int j = 0; j < 12; j++)
+        {
+            if (occupied[i, j] != Color.White)
+            {
+                if (j == 11)
+                return true;
+                continue;
+            }
+            break;
+        }
+        return false;
+    }
+
+    public static void ClearRow(int i)              //Verwijdert de rij
+    {
+        for (int j = 0; j < 12; j++)
+        {
+            occupied[i, j] = Color.White;
+        }
+    }
+
+    public static void MoveRows(int row)               //Verplaatst alle rijen vanaf row een plaats naar beneden
+    {
+        for (int i = row; i >= 0; i--)
+            for (int j = 0; j < 12; j++)
+                occupied[i + 1, j] = occupied[i, j];
+    }
+
     public int Width
     {
         get { return 12; }

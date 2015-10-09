@@ -10,6 +10,8 @@ class TetrisBlock
     Vector2 blockFormPosition, position, offset;
     int timesturn, width, height, p;
     Color color;
+    TimeSpan timelimit;
+    double levelspeed;
 
     public TetrisBlock(Color col, Texture2D blocksprite,
         int maxrow, int maxcolumn,
@@ -39,6 +41,8 @@ class TetrisBlock
                 blockFormTexture[i, j] = blocksprite;
         blockFormPosition = new Vector2(p * TetrisGrid.cellwidth, 0);   //Startpositie van blockFormTexture
         timesturn = 0;
+        timelimit = TimeSpan.FromSeconds(1);
+        levelspeed = 1;
     }
 
     public void HandleInput(InputHelper inputHelper, int width, int height, Vector2 position, string block, Vector2 offset)
@@ -127,11 +131,18 @@ class TetrisBlock
                 this.offset = offset;
             }
             blockFormPosition += new Vector2(0, 1 * TetrisGrid.cellheight);
+            timelimit = TimeSpan.FromSeconds(1);
             if (TetrisGrid.IsOutOfField(blockFormPosition, this.position, this.width, this.height, this.offset, p) || (TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color, this.offset)))
             {
                 blockFormPosition -= new Vector2(0, 1 * TetrisGrid.cellheight);
                 TetrisGrid.FillOccupiedField(color, p, blockForm, blockFormPosition, this.offset);
             }
+            for (int i = 0; i < 20; i++)
+                if (TetrisGrid.RowFull(i))
+                {
+                    TetrisGrid.ClearRow(i);
+                    TetrisGrid.MoveRows(i);
+                }
         }
         else if (inputHelper.KeyPressed(Keys.Left))                     //Beweegt naar links
         {
@@ -251,6 +262,28 @@ class TetrisBlock
         else
         {
             return new Vector2(p - width / TetrisGrid.cellwidth - position.X, p - height / TetrisGrid.cellheight - position.Y);
+        }
+    }
+
+    public void Update(GameTime gameTime)
+    {
+        double totalSeconds = gameTime.ElapsedGameTime.TotalSeconds * levelspeed;
+        timelimit -= TimeSpan.FromSeconds(totalSeconds);
+        if(timelimit.TotalSeconds <= 0)
+        {
+            blockFormPosition += new Vector2(0, 1 * TetrisGrid.cellheight);
+            timelimit = TimeSpan.FromSeconds(1);
+            if (TetrisGrid.IsOutOfField(blockFormPosition, this.position, this.width, this.height, this.offset, p) || (TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color, this.offset)))
+            {
+                blockFormPosition -= new Vector2(0, 1 * TetrisGrid.cellheight);
+                TetrisGrid.FillOccupiedField(color, p, blockForm, blockFormPosition, this.offset);
+            }
+            for (int i = 0; i < 20; i++)
+                if (TetrisGrid.RowFull(i))
+                {
+                    TetrisGrid.ClearRow(i);
+                    TetrisGrid.MoveRows(i);
+                }
         }
     }
 

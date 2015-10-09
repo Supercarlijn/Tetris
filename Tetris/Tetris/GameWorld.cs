@@ -88,6 +88,13 @@ class GameWorld
         }
         if (gameState == GameState.Options)
             options.Update();
+        //block1.Update(gameTime);
+        //block2.Update(gameTime);
+        block3.Update(gameTime);
+        //block4.Update(gameTime);
+        //block5.Update(gameTime);
+        //block6.Update(gameTime);
+        //block7.Update(gameTime);
     }
 
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
