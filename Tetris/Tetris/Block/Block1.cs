@@ -1,19 +1,32 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 class Block1 : TetrisBlock
 {
-    Vector2 blockPosition;           //Positie van blockFormTexture en positie van blokje in blockFormTexture
     int blockheight, blockwidth;     //Hoogte en breedte van het blokje in blockFormTexture
     /*bool visible;*/
 
     public Block1(Color color, Texture2D sprite)
-        : base(color, sprite, 4, 2, 0, 0, 0, 0, 0, 0, 4)
+        : base(4, "block1")
     {
         blockwidth = TetrisGrid.cellwidth;
         blockheight = 4 * TetrisGrid.cellheight;
-        blockPosition = new Vector2(1, 0);
+        base.blockPosition = new Vector2(1, 0);
+
+        base.color = color;
+        base.blockForm = new Color[4, 4];
+        for (int i = 0; i < 4; i++)         //Geeft aan welke delen bezet zijn en met welke kleur
+        {
+            for (int j = 1; j < 2; j++ )
+                base.blockForm[i, j] = color;
+        }
+
+        base.blockFormTexture = new Texture2D[4, 4];
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
+                blockFormTexture[i, j] = sprite;
+        base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van blockFormTexture
+        base.offset = new Vector2(2, 0);
         /*visible = false;*/
     }
     
@@ -23,7 +36,7 @@ class Block1 : TetrisBlock
         {
             return;
         }*/
-        base.HandleInput(inputHelper, blockwidth, blockheight, blockPosition, "block1", new Vector2(2,0));
+        base.HandleInput(inputHelper, blockwidth, blockheight);
     }
 
     /*public bool Visible

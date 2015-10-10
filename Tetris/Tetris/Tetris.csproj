@@ -72,6 +72,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlockList.cs" />
     <Compile Include="Block\Block1.cs" />
     <Compile Include="Block\Block2.cs" />
     <Compile Include="Block\Block3.cs" />

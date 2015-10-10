@@ -27,6 +27,7 @@ class GameWorld
     Block5 block5;                          //Donderblokje naar links
     Block6 block6;                          //Letter L
     Block7 block7;                          //Omgekeerde letter L
+    BlockList blocks;                       //De lijst die de blokjes bevat
 
 
     public GameWorld(int width, int height, ContentManager Content)
@@ -41,6 +42,8 @@ class GameWorld
         font = Content.Load<SpriteFont>("SpelFont");
         grid = new TetrisGrid(block);
         options = new Options(block, reset, width, height);
+
+        blocks = new BlockList();
         Color color;                        //De kleur van het blokje
         int p = Random.Next(6);
         if (p == 0)                          //Bepaalt de kleur dmv de random generator

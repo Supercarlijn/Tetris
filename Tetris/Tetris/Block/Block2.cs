@@ -3,16 +3,30 @@ using Microsoft.Xna.Framework.Graphics;
 
 class Block2 : TetrisBlock
 {
-    Vector2 blockPosition;           //Positie van blockFormTexture en positie van blokje in blockFormTexture
     int blockheight, blockwidth;                                    //Hoogte en breedte van het blokje in blockFormTexture
     /*bool visible;*/
 
     public Block2(Color color, Texture2D sprite)
-        : base(color, sprite, 3, 3, 1, 0, 0, 0, 0, 0, 4)
+        : base(4, "block2")
     {
         blockwidth = 2 * TetrisGrid.cellwidth;
         blockheight = 2 * TetrisGrid.cellheight;
-        blockPosition = new Vector2(1, 1);
+        base.blockPosition = new Vector2(1, 1);
+
+        base.color = color;
+        base.blockForm = new Color[4, 4];
+        for (int i = 1; i < 3; i++)         //Geeft aan welke delen bezet zijn en met welke kleur
+        {
+            for (int j = 1; j < 3; j++)
+                base.blockForm[i, j] = base.color;
+        }
+
+        base.blockFormTexture = new Texture2D[4, 4];
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
+                blockFormTexture[i, j] = sprite;
+        base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van blockFormTexture
+        base.offset = new Vector2(1, 1);
         /*visible = false;*/
     }
 
@@ -22,7 +36,7 @@ class Block2 : TetrisBlock
         {
             return;
         }*/
-        base.HandleInput(inputHelper, blockwidth, blockheight, blockPosition, "block2", new Vector2(1, 1));
+        base.HandleInput(inputHelper, blockwidth, blockheight);
     }
 
     /*public bool Visible
