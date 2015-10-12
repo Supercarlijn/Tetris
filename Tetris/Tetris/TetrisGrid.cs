@@ -38,12 +38,12 @@ class TetrisGrid
     }
 
     //Controleert of een blokje geroteerd had mogen worden, true staat hier voor dat het niet had gemogen.
-    public static bool CannotRotate(Vector2 blockFormPosition, Vector2 blockPosition, int blockwidth, int blockheight)
+    public static bool CannotRotate(Vector2 blockFormPosition, int blockwidth, int blockheight)
     {
-        return ((blockPosition.X + blockFormPosition.X < 0) ||                                  //Kijkt of block aan de linkerkant eruit is 
-                (blockPosition.X + blockwidth + blockFormPosition.X > 12 * cellwidth) ||        //Kijkt of block aan de rechterkant eruit is
-                (blockPosition.Y + blockFormPosition.Y < 0) ||                                  //Kijkt of block aan de bovenkant eruit is
-                (blockPosition.Y + blockheight + blockFormPosition.Y > 20 * cellheight));       //Kijkt of block aan de onder kant eruit is
+        return ((blockFormPosition.X < 0) ||                                  //Kijkt of block aan de linkerkant eruit is 
+                (blockwidth + blockFormPosition.X > 12 * cellwidth) ||        //Kijkt of block aan de rechterkant eruit is
+                (blockFormPosition.Y < 0) ||                                  //Kijkt of block aan de bovenkant eruit is
+                (blockheight + blockFormPosition.Y > 20 * cellheight));       //Kijkt of block aan de onder kant eruit is
     }
 
     //Controleert of een blokje verplaatst had mogen worden, true staat hier voor dat het niet had gemogen.

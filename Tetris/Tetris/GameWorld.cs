@@ -35,6 +35,7 @@ class GameWorld
         screenWidth = width;
         screenHeight = height;
         random = new Random();
+        blocks = new BlockList();
         gameState = GameState.Options;
         inputHelper = new InputHelper();
         block = Content.Load<Texture2D>("block");
@@ -59,12 +60,19 @@ class GameWorld
         else
             color = Color.Orange;
         block1 = new Block1(color, block);
+        blocks.Add(block1, 1);
         block2 = new Block2(color, block);
+        blocks.Add(block2, 2);
         block3 = new Block3(color, block);
+        blocks.Add(block3, 3);
         block4 = new Block4(color, block);
+        blocks.Add(block4, 4);
         block5 = new Block5(color, block);
+        blocks.Add(block5, 5);
         block6 = new Block6(color, block);
+        blocks.Add(block6, 6);
         block7 = new Block7(color, block);
+        blocks.Add(block7, 7);
     }
 
     public void Reset()
@@ -75,11 +83,12 @@ class GameWorld
     {
         //block1.HandleInput(inputHelper);
         //block2.HandleInput(inputHelper);
-        block3.HandleInput(inputHelper);
-        //block4.HandleInput(inputHelper);
+        //block3.HandleInput(inputHelper);
+        block4.HandleInput(inputHelper);
         //block5.HandleInput(inputHelper);
         //block6.HandleInput(inputHelper);
         //block7.HandleInput(inputHelper);
+        blocks.HandleInput(gameTime, inputHelper, i); //i is dus het random generator nummer van 1 t/m 7 
     }
 
     public void Update(GameTime gameTime)
@@ -93,11 +102,12 @@ class GameWorld
             options.Update();
         //block1.Update(gameTime);
         //block2.Update(gameTime);
-        block3.Update(gameTime);
-        //block4.Update(gameTime);
+        //block3.Update(gameTime);
+        block4.Update(gameTime);
         //block5.Update(gameTime);
         //block6.Update(gameTime);
         //block7.Update(gameTime);
+        blocks.Update(gameTime, i);
     }
 
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -109,6 +119,7 @@ class GameWorld
         //grid.Draw(gameTime, spriteBatch);  
         grid.Draw(gameTime, spriteBatch);
         block3.Draw(gameTime, spriteBatch);
+        blocks.Draw(gameTime, spriteBatch, i);
         spriteBatch.End();
     }
 

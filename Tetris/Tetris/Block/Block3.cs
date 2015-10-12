@@ -24,7 +24,7 @@ class Block3 : TetrisBlock
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
                 blockFormTexture[i, j] = sprite;
-        base.blockFormPosition = new Vector2(3 * TetrisGrid.cellwidth, 0);   //Startpositie van blockFormTexture
+        base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van blockFormTexture
         base.offset = new Vector2(0, 1);
         /*visible = false;*/
     }

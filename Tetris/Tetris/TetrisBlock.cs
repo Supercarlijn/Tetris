@@ -49,7 +49,7 @@ class TetrisBlock
             this.blockPosition = CalculateBlockPosition();
             this.offset = SetOffset();
 
-            if(TetrisGrid.CannotRotate(blockFormPosition, this.blockPosition, this.width, this.height) || TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color))
+            if(TetrisGrid.CannotRotate(blockFormPosition, this.width, this.height) || TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color))
             {
                 if (!(block == "block1" || block == "block4" || block == "block5"))
                 {
@@ -144,7 +144,6 @@ class TetrisBlock
     {
         if (timesturn == 2 && (block == "block1" || block == "block4" || block == "block5"))    //Deze blokjes hoeven maar 2x te draaien
         {
-            Console.WriteLine("yes");
             RotateLeft();
             timesturn = 0;
         }

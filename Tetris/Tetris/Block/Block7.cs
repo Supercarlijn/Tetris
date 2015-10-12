@@ -25,7 +25,7 @@ class Block7 : TetrisBlock
             for (int j = 0; j < 4; j++)
                 blockFormTexture[i, j] = sprite;
         base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van blockFormTexture
-        base.offset = new Vector2(0, 1);
+        base.offset = new Vector2(1, 1);
         /*visible = false;*/
     }
 
