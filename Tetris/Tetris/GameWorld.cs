@@ -84,7 +84,7 @@ class GameWorld
     public void HandleInput(GameTime gameTime, InputHelper inputHelper)
     {
         //block1.HandleInput(inputHelper);
-        block2.HandleInput(inputHelper);
+        //block2.HandleInput(inputHelper);
         //block3.HandleInput(inputHelper);
         //block4.HandleInput(inputHelper);
         //block5.HandleInput(inputHelper);

@@ -6,7 +6,7 @@ class BlockList : TetrisBlock
 {
     public Dictionary<int, TetrisBlock> blocks;
 
-    public BlockList() :base(0, null)
+    public BlockList() :base(null)
     {
         blocks = new Dictionary<int, TetrisBlock>();
     }

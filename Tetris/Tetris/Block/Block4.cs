@@ -7,25 +7,25 @@ class Block4 : TetrisBlock
     /*bool visible;*/
 
     public Block4(Color color, Texture2D sprite)
-        : base(3, "block4")
+        : base("block4")
     {
         blockwidth = 2 * TetrisGrid.cellwidth;
         blockheight = 3 * TetrisGrid.cellheight;
-        base.blockPosition = new Vector2(0, 0);
+        base.blockPosition = new Vector2(1, 0);
 
         base.color = color;
-        base.blockForm = new Color[3, 3];
-        blockForm[0, 1] = color;
-        blockForm[1, 0] = color;
+        base.blockForm = new Color[4, 4];
+        blockForm[0, 2] = color;
         blockForm[1, 1] = color;
-        blockForm[2, 0] = color;
+        blockForm[1, 2] = color;
+        blockForm[2, 1] = color;
 
-        base.blockFormTexture = new Texture2D[3, 3];
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
+        base.blockFormTexture = new Texture2D[4, 4];
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
                 blockFormTexture[i, j] = sprite;
         base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van blockFormTexture
-        base.offset = new Vector2(1, 0);
+        base.offset = new Vector2(1, 1);
         /*visible = false;*/
     }
 

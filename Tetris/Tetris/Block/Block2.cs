@@ -7,7 +7,7 @@ class Block2 : TetrisBlock
     /*bool visible;*/
 
     public Block2(Color color, Texture2D sprite)
-        : base(4, "block2")
+        : base("block2")
     {
         blockwidth = 2 * TetrisGrid.cellwidth;
         blockheight = 2 * TetrisGrid.cellheight;
