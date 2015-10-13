@@ -37,6 +37,11 @@ class TetrisGrid
             (blockFormPosition.Y > 20 * cellheight - p * cellwidth + offset.Y * cellheight));   //Kijkt of block aan de onderkant eruit is
     }
 
+    public static bool IsUnderField(Vector2 blockFormPosition, Vector2 blockPosition, Vector2 offset, int p)
+    {
+        return (blockFormPosition.Y > 20 * cellheight - p * cellwidth + offset.Y * cellheight);
+    }
+
     //Controleert of een blokje geroteerd had mogen worden, true staat hier voor dat het niet had gemogen.
     public static bool CannotRotate(Vector2 blockFormPosition, int blockwidth, int blockheight)
     {
@@ -54,7 +59,7 @@ class TetrisGrid
             {
                 if (blockForm[i, j] == color)   //Kijkt of de plek in blockForm bezet is en daarna of die plek in het speelveld ook bezet is, geeft dan true terug
                 {
-                    if ((occupied[i + ((int)blockFormPosition.Y / cellheight), j + ((int)blockFormPosition.X / cellwidth)] != Color.White))
+                    if ((occupied[i + ((int)blockFormPosition.Y / cellheight), j + ((int)blockFormPosition.X / cellwidth)] != Color.White)) //PROBLEEM HIER
                     {
                         return true;
                     }
@@ -110,9 +115,9 @@ class TetrisGrid
     //Verplaatst alle rijen vanaf row een plaats naar beneden
     public static void MoveRows(int row)
     {
-        for (int i = row; i >= 0; i--)              //Kopieert de rij van onder naar boven
+        for (int i = row - 1; i >= 0; i--)              //Kopieert de rij van onder naar boven
             for (int j = 0; j < 12; j++)
-                occupied[i + 1, j] = occupied[i, j];
+                occupied[i+1, j] = occupied[i, j];
     }
 
     public int Width

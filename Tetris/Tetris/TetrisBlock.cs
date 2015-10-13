@@ -9,6 +9,7 @@ class TetrisBlock
     protected Texture2D[,] blockFormTexture;            //Array met de textureblokjes
     protected Vector2 blockFormPosition, blockPosition, offset; //Positie van blokje in blockFormTexture
     int timesturn, width, height, p;
+    public bool newBlock;
     protected Color color;
     TimeSpan timelimit;
     double levelspeed;
@@ -236,6 +237,8 @@ class TetrisBlock
                 blockFormPosition -= new Vector2(0, 1 * TetrisGrid.cellheight);
                 TetrisGrid.FillOccupiedField(color, p, blockForm, blockFormPosition);
                 CheckRows();
+                newBlock = true;
+                //Reset();
             }
         }
     }
@@ -249,6 +252,9 @@ class TetrisBlock
                 //blabla + blockFormPosition; blabla is de afstand van de blokken IN blockFormTexture
             }
     }
+
+    public virtual void Reset()
+    { }
 
     public int Width
     {

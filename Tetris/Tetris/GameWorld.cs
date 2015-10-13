@@ -18,6 +18,7 @@ class GameWorld
     TetrisGrid grid;
     Options options;
     public int screenWidth, screenHeight;
+    int i;
 
     InputHelper inputHelper;
     Block1 block1;                          //Langwerpig blokje
@@ -43,6 +44,7 @@ class GameWorld
         font = Content.Load<SpriteFont>("SpelFont");
         grid = new TetrisGrid(block);
         options = new Options(block, reset, width, height);
+        i = (int)random.Next(7) + 1;
 
         blocks = new BlockList();
         Color color;                        //De kleur van het blokje
@@ -82,13 +84,13 @@ class GameWorld
     public void HandleInput(GameTime gameTime, InputHelper inputHelper)
     {
         //block1.HandleInput(inputHelper);
-        //block2.HandleInput(inputHelper);
+        block2.HandleInput(inputHelper);
         //block3.HandleInput(inputHelper);
-        block4.HandleInput(inputHelper);
+        //block4.HandleInput(inputHelper);
         //block5.HandleInput(inputHelper);
         //block6.HandleInput(inputHelper);
         //block7.HandleInput(inputHelper);
-        blocks.HandleInput(gameTime, inputHelper, i); //i is dus het random generator nummer van 1 t/m 7 
+        blocks.HandleInput(inputHelper, i); //i is dus het random generator nummer van 1 t/m 7 
     }
 
     public void Update(GameTime gameTime)
@@ -103,11 +105,26 @@ class GameWorld
         //block1.Update(gameTime);
         //block2.Update(gameTime);
         //block3.Update(gameTime);
-        block4.Update(gameTime);
+        //block4.Update(gameTime);
         //block5.Update(gameTime);
         //block6.Update(gameTime);
         //block7.Update(gameTime);
-        blocks.Update(gameTime, i);
+        if (true)
+        { 
+            blocks.Update(gameTime, i);
+            if (block1.newBlock || block2.newBlock || block3.newBlock || block4.newBlock || block5.newBlock || block6.newBlock || block7.newBlock)
+            {
+                block1.newBlock = false;
+                block2.newBlock = false;
+                block3.newBlock = false;
+                block4.newBlock = false;
+                block5.newBlock = false;
+                block6.newBlock = false;
+                block7.newBlock = false;
+                blocks.Reset(i);
+                i = (int)random.Next(7) + 1;
+            }    
+        }
     }
 
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -116,9 +133,7 @@ class GameWorld
         if (gameState == GameState.Options)
             options.Draw(gameTime, spriteBatch);
 
-        //grid.Draw(gameTime, spriteBatch);  
         grid.Draw(gameTime, spriteBatch);
-        block3.Draw(gameTime, spriteBatch);
         blocks.Draw(gameTime, spriteBatch, i);
         spriteBatch.End();
     }

@@ -39,6 +39,11 @@ class Block2 : TetrisBlock
         base.HandleInput(inputHelper, blockwidth, blockheight);
     }
 
+    public override void Reset()
+    {
+        base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);
+    }
+
     /*public bool Visible
     {
         get { return visible; }

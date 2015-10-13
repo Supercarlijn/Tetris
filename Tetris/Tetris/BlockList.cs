@@ -44,10 +44,10 @@ class BlockList : TetrisBlock
         blocks[i].Draw(gameTime, spriteBatch);
     }
 
-    /*public void Reset(int i)
+    public void Reset(int i)
     {
         blocks[i].Reset();
-    }*/
+    }
 
     public Dictionary<int,TetrisBlock> Blocks
     {
