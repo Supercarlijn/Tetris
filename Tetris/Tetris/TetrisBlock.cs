@@ -8,7 +8,7 @@ class TetrisBlock
     protected Color[,] blockForm;                       //Houdt bij wat de vorm is van een blok
     protected Texture2D[,] blockFormTexture;            //Array met de textureblokjes
     protected Vector2 blockFormPosition, blockPosition, offset; //Positie van blokje in blockFormTexture
-    int timesturn, width, height, p;
+    protected int timesturn, width, height;
     public bool newBlock;
     protected Color color;
     TimeSpan timelimit;
@@ -210,7 +210,10 @@ class TetrisBlock
     {
         if (timesturn == 0 && (block == "block1" || block == "block4" || block == "block5"))
         {
-            return new Vector2(offset.Y, offset.X);
+            if (block == "block1")
+                return new Vector2(2, 0);
+            else
+                return new Vector2(1, 1);
         }
         else
         {
@@ -258,16 +261,17 @@ class TetrisBlock
     }
 
     public virtual void Reset()
-    { }
+    {
+    }
 
     public int Width
     {
-        get { return width; }
+        get { return this.width; }
     }
 
     public int Height
     {
-        get { return height; }
+        get { return this.height; }
     }
 
     public string Block

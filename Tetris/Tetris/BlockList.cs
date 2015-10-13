@@ -29,7 +29,7 @@ class BlockList : TetrisBlock
 
     public void HandleInput(InputHelper inputHelper, int i)
     {
-         if (i < 0 || i > blocks.Count - 1)
+         if (i < 0 || i > blocks.Count)
              return;
          blocks[i].HandleInput(inputHelper, blocks[i].Width, blocks[i].Height);
     }

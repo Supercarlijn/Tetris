@@ -83,13 +83,6 @@ class GameWorld
 
     public void HandleInput(GameTime gameTime, InputHelper inputHelper)
     {
-        //block1.HandleInput(inputHelper);
-        //block2.HandleInput(inputHelper);
-        //block3.HandleInput(inputHelper);
-        //block4.HandleInput(inputHelper);
-        //block5.HandleInput(inputHelper);
-        //block6.HandleInput(inputHelper);
-        //block7.HandleInput(inputHelper);
         blocks.HandleInput(inputHelper, i); //i is dus het random generator nummer van 1 t/m 7 
     }
 
@@ -102,13 +95,6 @@ class GameWorld
         }
         if (gameState == GameState.Options)
             options.Update();
-        //block1.Update(gameTime);
-        //block2.Update(gameTime);
-        //block3.Update(gameTime);
-        //block4.Update(gameTime);
-        //block5.Update(gameTime);
-        //block6.Update(gameTime);
-        //block7.Update(gameTime);
         if (true)
         { 
             blocks.Update(gameTime, i);

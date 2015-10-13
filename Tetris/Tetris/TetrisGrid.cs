@@ -39,7 +39,7 @@ class TetrisGrid
 
     public static bool IsUnderField(Vector2 blockFormPosition, Vector2 blockPosition, Vector2 offset, int p)
     {
-        return (blockFormPosition.Y > 20 * cellheight - p * cellwidth + offset.Y * cellheight);
+        return (blockFormPosition.Y > 20 * cellheight - 4 * cellwidth + offset.Y * cellheight);
     }
 
     //Controleert of een blokje geroteerd had mogen worden, true staat hier voor dat het niet had gemogen.
