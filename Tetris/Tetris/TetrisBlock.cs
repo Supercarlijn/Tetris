@@ -14,9 +14,8 @@ class TetrisBlock
     double levelspeed;
     string block;
 
-    public TetrisBlock(int k, string block)
+    public TetrisBlock(string block)
     {
-        p = k;
         this.block = block;
         timesturn = 0;
         timelimit = TimeSpan.FromSeconds(1);
@@ -49,7 +48,7 @@ class TetrisBlock
             this.blockPosition = CalculateBlockPosition();
             this.offset = SetOffset();
 
-            if(TetrisGrid.CannotRotate(blockFormPosition, this.width, this.height) || TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color))
+            if(TetrisGrid.CannotRotate(blockFormPosition, this.width, this.height) || TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
             {
                 if (!(block == "block1" || block == "block4" || block == "block5"))
                 {
@@ -87,10 +86,10 @@ class TetrisBlock
             }
             blockFormPosition += new Vector2(0, 1 * TetrisGrid.cellheight);
             timelimit = TimeSpan.FromSeconds(1);
-            if (TetrisGrid.IsOutOfField(blockFormPosition, this.blockPosition, this.offset, p) || (TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color)))
+            if (TetrisGrid.IsOutOfField(blockFormPosition, this.blockPosition, this.offset) || (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color)))
             {
                 blockFormPosition -= new Vector2(0, 1 * TetrisGrid.cellheight);
-                TetrisGrid.FillOccupiedField(color, p, blockForm, blockFormPosition);
+                TetrisGrid.FillOccupiedField(color, blockForm, blockFormPosition);
                 CheckRows();
             }
             for (int i = 0; i < 20; i++)
@@ -108,14 +107,14 @@ class TetrisBlock
                 this.height = height;
             }
             blockFormPosition += new Vector2(-1 * TetrisGrid.cellwidth, 0);
-            if (TetrisGrid.IsOutOfField(blockFormPosition, this.blockPosition, this.offset, p))
+            if (TetrisGrid.IsOutOfField(blockFormPosition, this.blockPosition, this.offset))
             {
                 blockFormPosition += new Vector2(1 * TetrisGrid.cellwidth, 0);
             }
-            if (TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color))
+            if (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
             {
                 blockFormPosition += new Vector2(1 * TetrisGrid.cellwidth, 0);
-                TetrisGrid.FillOccupiedField(color, p, blockForm, blockFormPosition);
+                TetrisGrid.FillOccupiedField(color, blockForm, blockFormPosition);
                 CheckRows();
             }
         }
@@ -127,14 +126,14 @@ class TetrisBlock
                 this.height = height;
             }
             blockFormPosition += new Vector2(1 * TetrisGrid.cellwidth, 0);
-            if (TetrisGrid.IsOutOfField(blockFormPosition, this.blockPosition, this.offset, p))
+            if (TetrisGrid.IsOutOfField(blockFormPosition, this.blockPosition, this.offset))
             {
                 blockFormPosition -= new Vector2(1 * TetrisGrid.cellwidth, 0);
             }
-            if (TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color))
+            if (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
             {
                 blockFormPosition -= new Vector2(1 * TetrisGrid.cellwidth, 0);
-                TetrisGrid.FillOccupiedField(color, p, blockForm, blockFormPosition);
+                TetrisGrid.FillOccupiedField(color, blockForm, blockFormPosition);
                 CheckRows();
             }
         }
@@ -149,56 +148,61 @@ class TetrisBlock
         }
         else
         {
-            Color[,] result = new Color[p, p];
-            for (int i = 0; i < p; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
-                for (int j = 0; j < p; j++)
+            Color[,] result = new Color[4, 4];
+            for (int i = 0; i < 4; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
+                for (int j = 0; j < 4; j++)
                 {
-                    result[i, j] = blockForm[p - j - 1, i];
+                    result[i, j] = blockForm[3 - j, i];
                 }
-            for (int i = 0; i < p; i++)
-                for (int j = 0; j < p; j++)
+            for (int i = 0; i < 4; i++)
+                for (int j = 0; j < 4; j++)
                     blockForm[i, j] = result[i, j];
         }
     }
 
     public void RotateLeft()
     {
-        Color[,] result = new Color[p, p];
-        for (int i = 0; i < p; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
-            for (int j = 0; j < p; j++)
+        Color[,] result = new Color[4, 4];
+        for (int i = 0; i < 4; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
+            for (int j = 0; j < 4; j++)
             {
-                result[i, j] = blockForm[j, p - i - 1];
+                result[i, j] = blockForm[j, 3 - i];
             }
-        for (int i = 0; i < p; i++)
-            for (int j = 0; j < p; j++)
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
                 blockForm[i, j] = result[i, j];
     }
 
     public Vector2 CalculateBlockPosition()  //Verandert de positie van het blokje in array
     {
-        switch (timesturn)
+        Vector2 resultaat = new Vector2(10, 10);  //expres grote waarde 10 genomen, omdat hij anders grote kans heeft om al voortijdig te breaken
+        for (int i = 0; i < 4; i++)
         {
-            case 1:
-                if (p == 3)
-                    return new Vector2(p - width / TetrisGrid.cellwidth, 0);
-                else
-                    return new Vector2(p - width / TetrisGrid.cellwidth, 1);
-            case 2:
-                if (p == 3)
-                    return new Vector2(0, 1);
-                else
-                    return new Vector2(1, 1);
-            case 3:
-                if (p == 3)
-                    return new Vector2(0, 0);
-                else
-                    return new Vector2(0, 1);
-            default:            //Als timesturn == 0
-                if (p == 3)
-                    return new Vector2(0, 0);
-                else
-                    return new Vector2(1, 0);
+            for (int j = 0; j < 4; j++)
+            {
+                if (blockForm[i, j] == color)
+                {
+                    resultaat.Y = i;
+                    break;
+                }
+            }
+            if (resultaat.Y == i)
+                break;
         }
+        for (int j = 0; j < 4; j++)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (blockForm[i,j] == color)
+                {
+                    resultaat.X = j;
+                    break;
+                }
+            }
+            if (resultaat.X == j)
+                break;
+        }
+        return resultaat;
     }
 
     public Vector2 SetOffset ()
@@ -209,7 +213,7 @@ class TetrisBlock
         }
         else
         {
-            return new Vector2(p - width / TetrisGrid.cellwidth - blockPosition.X, p - height / TetrisGrid.cellheight - blockPosition.Y);
+            return new Vector2(4 - width / TetrisGrid.cellwidth - blockPosition.X, 4 - height / TetrisGrid.cellheight - blockPosition.Y);
         }
     }
 
@@ -231,10 +235,10 @@ class TetrisBlock
         {
             blockFormPosition += new Vector2(0, 1 * TetrisGrid.cellheight);
             timelimit = TimeSpan.FromSeconds(1);
-            if (TetrisGrid.IsOutOfField(blockFormPosition, this.blockPosition, this.offset, p) || (TetrisGrid.CheckPlayField(p, blockFormPosition, blockForm, color)))
+            if (TetrisGrid.IsOutOfField(blockFormPosition, this.blockPosition, this.offset) || (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color)))
             {
                 blockFormPosition -= new Vector2(0, 1 * TetrisGrid.cellheight);
-                TetrisGrid.FillOccupiedField(color, p, blockForm, blockFormPosition);
+                TetrisGrid.FillOccupiedField(color, blockForm, blockFormPosition);
                 CheckRows();
             }
         }
@@ -242,8 +246,8 @@ class TetrisBlock
 
     public void Draw(GameTime gameTime, SpriteBatch s)
     {
-        for (int i = 0; i < p; i++)
-            for (int j = 0; j < p; j++)
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
             {
                 s.Draw(blockFormTexture[i, j], new Vector2(j * TetrisGrid.cellwidth, i * TetrisGrid.cellheight) + blockFormPosition, blockForm[i, j]);
                 //blabla + blockFormPosition; blabla is de afstand van de blokken IN blockFormTexture

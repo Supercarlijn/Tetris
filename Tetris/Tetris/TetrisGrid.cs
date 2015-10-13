@@ -30,11 +30,11 @@ class TetrisGrid
     }
 
     //Controleert of een blokje in de nieuwe positie (deels) uit het speelveld is
-    public static bool IsOutOfField(Vector2 blockFormPosition, Vector2 blockPosition, Vector2 offset, int p)
+    public static bool IsOutOfField(Vector2 blockFormPosition, Vector2 blockPosition, Vector2 offset)
     {
         return ((blockFormPosition.X + blockPosition.X * cellwidth < 0) ||                      //Kijkt of block aan de linkerkant eruit is
-            (blockFormPosition.X > 12 * cellwidth - p * cellwidth + offset.X * cellwidth) ||    //Kijkt of block aan de rechterkant eruit is
-            (blockFormPosition.Y > 20 * cellheight - p * cellwidth + offset.Y * cellheight));   //Kijkt of block aan de onderkant eruit is
+            (blockFormPosition.X > 12 * cellwidth - 4 * cellwidth + offset.X * cellwidth) ||    //Kijkt of block aan de rechterkant eruit is
+            (blockFormPosition.Y > 20 * cellheight - 4 * cellwidth + offset.Y * cellheight));   //Kijkt of block aan de onderkant eruit is
     }
 
     //Controleert of een blokje geroteerd had mogen worden, true staat hier voor dat het niet had gemogen.
@@ -47,10 +47,10 @@ class TetrisGrid
     }
 
     //Controleert of een blokje verplaatst had mogen worden, true staat hier voor dat het niet had gemogen.
-    public static bool CheckPlayField (int p, Vector2 blockFormPosition, Color[,] blockForm, Color color)
+    public static bool CheckPlayField (Vector2 blockFormPosition, Color[,] blockForm, Color color)
     {
-        for (int i = 0; i< p; i++)
-            for (int j = 0; j < p; j++)         //Gaat de rijen en kolommen af
+        for (int i = 0; i< 4; i++)
+            for (int j = 0; j < 4; j++)         //Gaat de rijen en kolommen af
             {
                 if (blockForm[i, j] == color)   //Kijkt of de plek in blockForm bezet is en daarna of die plek in het speelveld ook bezet is, geeft dan true terug
                 {
@@ -59,7 +59,7 @@ class TetrisGrid
                         return true;
                     }
                 }
-                if((i == p - 1) && (j == p - 1))    //Als na elke plek afgegaan te zijn, nergens twee plekken overlappen, mocht het blokje verplaatst worden
+                if((i == 3) && (j == 3))    //Als na elke plek afgegaan te zijn, nergens twee plekken overlappen, mocht het blokje verplaatst worden
                 {
                     return false;
                 }
@@ -68,11 +68,11 @@ class TetrisGrid
     }
 
     //Zet een plaats op het speelveld op bezet
-    public static void FillOccupiedField(Color color, int p, Color[,] blockForm, Vector2 blockFormPosition)
+    public static void FillOccupiedField(Color color, Color[,] blockForm, Vector2 blockFormPosition)
     {
-        for (int i = 0; i < p; i++)
+        for (int i = 0; i < 4; i++)
         {
-            for (int j = 0; j < p; j++)     //Gaat de rijen en kolommen af
+            for (int j = 0; j < 4; j++)     //Gaat de rijen en kolommen af
             {
                 if (blockForm[i, j] == color)   //Kijkt of de plek in blockForm bezet is en kent de kleur van deze plek toe aan de plek in het speelveld
                 {

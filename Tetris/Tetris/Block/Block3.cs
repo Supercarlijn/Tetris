@@ -7,25 +7,25 @@ class Block3 : TetrisBlock
     /*bool visible;*/
     
     public Block3(Color color, Texture2D sprite)
-        : base(3, "block3")
+        : base("block3")
     {
-        blockwidth = 3 * TetrisGrid.cellwidth;
-        blockheight = 2 * TetrisGrid.cellheight;
-        base.blockPosition = new Vector2(0, 0);
+        blockwidth = 3 * TetrisGrid.cellwidth; //deze wordt aangepast in optie-menu
+        blockheight = 2 * TetrisGrid.cellheight; //deze wordt aangepast in optie-menu
+        base.blockPosition = new Vector2(1, 0); //deze wordt aangepast in optie-menu, dus dan moet je eventueel een nieuwe waarde toekennen. Deze is te berekenen met methode uit TetrisBlock
 
         base.color = color;
-        base.blockForm = new Color[3, 3];
-        blockForm[0, 1] = color;
-        blockForm[1, 0] = color;
+        base.blockForm = new Color[4, 4];
+        blockForm[0, 2] = color;
         blockForm[1, 1] = color;
         blockForm[1, 2] = color;
+        blockForm[1, 3] = color;
 
-        base.blockFormTexture = new Texture2D[3, 3];
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
+        base.blockFormTexture = new Texture2D[4, 4];
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
                 blockFormTexture[i, j] = sprite;
         base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van blockFormTexture
-        base.offset = new Vector2(0, 1);
+        base.offset = new Vector2(0, 2); //deze wordt aangepast in optie-menu, dus dan moet je eventueel een nieuwe waarde toekennen. Deze is te berekenen met methode uit TetrisBlock
         /*visible = false;*/
     }
 
