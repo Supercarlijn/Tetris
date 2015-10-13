@@ -49,7 +49,7 @@ class TetrisBlock
             this.blockPosition = CalculateBlockPosition();
             this.offset = SetOffset();
 
-            if(TetrisGrid.CannotRotate(blockFormPosition, this.width, this.height) || TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
+            if(TetrisGrid.CannotRotate(blockFormPosition, blockPosition, this.width, this.height) || TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
             {
                 if (!(block == "block1" || block == "block4" || block == "block5"))
                 {
@@ -93,12 +93,6 @@ class TetrisBlock
                 TetrisGrid.FillOccupiedField(color, blockForm, blockFormPosition);
                 CheckRows();
             }
-            for (int i = 0; i < 20; i++)
-                if (TetrisGrid.RowFull(i))
-                {
-                    TetrisGrid.ClearRow(i);
-                    TetrisGrid.MoveRows(i);
-                }
         }
         else if (inputHelper.KeyPressed(Keys.Left))                     //Beweegt naar links
         {
