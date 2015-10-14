@@ -21,6 +21,7 @@ class TetrisGame : Game
         graphics.PreferredBackBufferWidth = 800;
         graphics.PreferredBackBufferHeight = 600;
         inputHelper = new InputHelper();
+        IsMouseVisible = true; 
     }
 
     protected override void LoadContent()

@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 class Block7 : TetrisBlock
 {
-    Color[,] oldblockForm;
-
     public Block7(Texture2D sprite)
         : base("block7", sprite)
     {
@@ -14,11 +12,12 @@ class Block7 : TetrisBlock
         blockForm[1, 2] = color;
         blockForm[2, 2] = color;
         blockForm[2, 1] = color;
-        oldblockForm = new Color[4, 4];
-        oldblockForm[0, 2] = color;
-        oldblockForm[1, 2] = color;
-        oldblockForm[2, 2] = color;
-        oldblockForm[2, 1] = color;
+        base.currentBlockForm = new Color[4, 4];
+        blockForm[0, 2] = base.color;
+        blockForm[1, 2] = base.color;
+        blockForm[2, 2] = base.color;
+        blockForm[2, 1] = base.color;
+        base.currentBlockForm = base.blockForm;
         base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van blockFormTexture
     }
 
@@ -26,4 +25,6 @@ class Block7 : TetrisBlock
     {
         blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);
     }
+
+
 }

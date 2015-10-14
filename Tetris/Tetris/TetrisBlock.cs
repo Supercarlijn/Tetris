@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 
 class TetrisBlock
 {
-    protected Color[,] blockForm;                       //Houdt bij wat de vorm is van een blok
+    protected Color[,] blockForm, currentBlockForm, oldBlockForm;                       //Houdt bij wat de vorm is van een blok
     protected Vector2 blockFormPosition;
     protected int timesturn;
     public bool newBlock;
@@ -35,13 +35,6 @@ class TetrisBlock
 
             if(TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color) || TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
             {
-                if (!(block == "block1" || block == "block4" || block == "block5"))
-                {
-                    timesturn--;
-                    RotateLeft();
-                }
-                else
-                {
                     if (timesturn == 1)
                     {
                         timesturn--;
@@ -54,7 +47,7 @@ class TetrisBlock
                     }
                 }
             }
-        }
+        
         else if (inputHelper.KeyPressed(Keys.Down))                     //Beweegt naar beneden
         {
             blockFormPosition += new Vector2(0, 1 * TetrisGrid.cellheight);
@@ -94,13 +87,6 @@ class TetrisBlock
 
     public void RotateRight()
     {
-        if (timesturn == 2 && (block == "block1" || block == "block4" || block == "block5"))    //Deze blokjes hoeven maar 2x te draaien
-        {
-            RotateLeft();
-            timesturn = 0;
-        }
-        else
-        {
             Color[,] result = new Color[4, 4];
             for (int i = 0; i < 4; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
                 for (int j = 0; j < 4; j++)
@@ -110,7 +96,6 @@ class TetrisBlock
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < 4; j++)
                     blockForm[i, j] = result[i, j];
-        }
     }
 
     public void RotateLeft()
@@ -171,5 +156,27 @@ class TetrisBlock
     public string Block
     {
         get { return block; }
+    }
+
+    public Color[,] BlockForm
+    {
+        get { return blockForm; }
+        set { blockForm = value; }
+    }
+
+    public Color[,] CurrentBlockForm
+    {
+        get { return currentBlockForm; }
+        set { currentBlockForm = value; }
+    }
+
+    public Color[,] OldBlockForm
+    {
+        get { return oldBlockForm; }
+    }
+
+    public Color Color
+    {
+        get { return color; }
     }
 }
