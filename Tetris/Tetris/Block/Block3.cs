@@ -18,14 +18,13 @@ class Block3 : TetrisBlock
         base.color = Color.Green;
         base.blockForm = new Color[4, 4];
         base.currentBlockForm = new Color[4, 4];
-        base.blockForm[0, 2] = base.color;
+        base.oldBlockForm = new Color[4, 4];
+        base.blockForm[0, 1] = base.color;
+        base.blockForm[1, 0] = base.color;
         base.blockForm[1, 1] = base.color;
         base.blockForm[1, 2] = base.color;
-        base.blockForm[1, 3] = base.color;
-        base.oldBlockForm = new Color[4, 4];
         base.oldBlockForm = base.blockForm;
         base.currentBlockForm = base.blockForm;
-
         base.blockFormTexture = new Texture2D[4, 4];
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 4; j++)

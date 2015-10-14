@@ -19,7 +19,7 @@ class Block1 : TetrisBlock
 
         base.color = Color.Red;
         base.blockForm = new Color[4, 4];
-       base.oldBlockForm = new Color[4, 4];
+        base.oldBlockForm = new Color[4, 4];
         base.currentBlockForm = new Color[4, 4];
         for (int i = 0; i < 4; i++)         //Geeft aan welke delen bezet zijn en met welke kleur
         {
