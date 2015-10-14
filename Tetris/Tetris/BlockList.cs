@@ -6,7 +6,7 @@ class BlockList : TetrisBlock
 {
     public Dictionary<int, TetrisBlock> blocks;
 
-    public BlockList() :base(null)
+    public BlockList(Texture2D sprite) :base(null, sprite)
     {
         blocks = new Dictionary<int, TetrisBlock>();
     }
@@ -31,7 +31,7 @@ class BlockList : TetrisBlock
     {
          if (i < 0 || i > blocks.Count)
              return;
-         blocks[i].HandleInput(inputHelper, blocks[i].Width, blocks[i].Height);
+         blocks[i].HandleInput(inputHelper);
     }
 
     public void Update(GameTime gameTime, int i)

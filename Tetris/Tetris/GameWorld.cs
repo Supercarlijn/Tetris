@@ -36,7 +36,6 @@ class GameWorld
         screenWidth = width;
         screenHeight = height;
         random = new Random();
-        blocks = new BlockList();
         gameState = GameState.Options;
         inputHelper = new InputHelper();
         block = Content.Load<Texture2D>("block");
@@ -46,7 +45,7 @@ class GameWorld
         options = new Options(block, reset, width, height);
         i = (int)random.Next(7) + 1;
 
-        blocks = new BlockList();
+        blocks = new BlockList(block);
         block1 = new Block1(block);
         blocks.Add(block1, 1);
         block2 = new Block2(block);

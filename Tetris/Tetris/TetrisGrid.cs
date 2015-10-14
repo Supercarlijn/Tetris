@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 class TetrisGrid
 {
-    Texture2D[,] grid;                          //Het speelveld
     static Color[,] occupied;                   //Houdt bij welke plekken bezet zijn; Color.White is onbezet
     Texture2D gridblock;                        //Het blokje waar het speelveld uit bestaat
     Vector2 position;                           //De positie van het grid
@@ -17,11 +16,6 @@ class TetrisGrid
         position = Vector2.Zero;
         cellwidth = gridblock.Width;
         cellheight = gridblock.Height;
-
-        grid = new Texture2D[20, 12];
-        for (int i = 0; i < 20; i++)            //Vult het grid met de bloksprite (gridblock)
-            for (int j = 0; j < 12; j++)
-                grid[i, j] = gridblock;
 
         occupied = new Color[20,12];
         for (int i = 0; i < 20; i++)            //Zet elke plek in het speelveld op onbezet
@@ -61,7 +55,6 @@ class TetrisGrid
             {
                 if (blockForm[i, j] == color)   //Kijkt of de plek in blockForm bezet is en daarna of die plek in het speelveld ook bezet is, geeft dan true terug
                 {
-                    Console.WriteLine(new Vector2(j + ((int)blockFormPosition.X / cellwidth), i + ((int)blockFormPosition.Y / cellheight)));
                     if ((occupied[i + ((int)blockFormPosition.Y / cellheight), j + ((int)blockFormPosition.X / cellwidth)] != Color.White))
                     {
                         return true;
@@ -142,6 +135,6 @@ class TetrisGrid
         //Tekent het speelveld
         for (int i = 0; i < 20; i++)
             for (int j = 0; j < 12; j++)
-                s.Draw(grid[i, j], new Vector2(j * cellwidth, i * cellheight), occupied[i,j]);
+                s.Draw(gridblock, new Vector2(j * cellwidth, i * cellheight), occupied[i,j]);
     }
 }
