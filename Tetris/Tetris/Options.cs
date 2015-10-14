@@ -25,9 +25,7 @@ class Options
         block5 = blocks.Find(5);
         block6 = blocks.Find(6);
         block7 = blocks.Find(7);
-        font = spriteFont;
-        
-        
+        font = spriteFont;   
     }
 
     public void HandleInput(InputHelper i)
@@ -337,13 +335,44 @@ class Options
             }
         }
 
-    for (int i = -11; i < 10; i += 5)
-        spriteBatch.Draw(reset, new Vector2((screenWidth / 2 + (i * block.Width)), block.Height * 5), null, Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+        for (int i = -11; i < 10; i += 5)
+            spriteBatch.Draw(reset, new Vector2((screenWidth / 2 + (i * block.Width)), block.Height * 5), null, Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
-    spriteBatch.Draw(reset, new Vector2((screenWidth / 2 - (11 * block.Width)), block.Height * 11), null, Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-    spriteBatch.Draw(reset, new Vector2((screenWidth / 2 + (9 * block.Width)), block.Height * 11), null, Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(reset, new Vector2((screenWidth / 2 - (11 * block.Width)), block.Height * 11), null, Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(reset, new Vector2((screenWidth / 2 + (9 * block.Width)), block.Height * 11), null, Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
 
         spriteBatch.DrawString(font, "In case of a block which fits in a 3x3 grid, place the schematic in the top left of the grid", new Vector2(0f, screenHeight - 24), Color.Black);
+    }
+
+    //Deze methode moet aangeroepen worden voor elk blokje bij het sluiten van options, int k is daar dan 4 (voor elk blokje)
+    public void CalculateArrayRotatingLength(TetrisBlock block, Color color, int k)
+    {
+        for (int j = 0; j < k; j++)                //Controleert hier de onderste rij van het 4x4 grid
+        {
+            if (k == 1)
+            {
+                block.ArrayRotatingLength = k;      //Beveiliging dat je niet een "grid" krijgt van 0, minimale lengte moet namelijk 1 zijn ivm errors
+                break;
+            }
+            if (block.BlockForm[k - 1, j] == color)     //Als hij op een plek bezet is
+            {
+                block.ArrayRotatingLength = k;          //dan is de gridlengte dus k
+                break;                                  //en zijn we klaar met de methode
+            }
+            if (j == 3)                                 //Als de rij na het doorlopen nergens bezet was
+                for (int i = 0; i < k - 1; i++)         //Controleert hier de rechterste kolom van het 4x4 grid
+                {
+                    if (block.BlockForm[i, k - 1] == color) //Als hij op een plek bezet is
+                    {
+                        block.ArrayRotatingLength = k;      //dan is de gridlengte dus k
+                        break;                              //en zijn we klaar met de methode
+                    }
+                    if (i == 2)                             //Als de kolom na het doorlopen nergens bezet was
+                    {
+                        CalculateArrayRotatingLength(block, color, k - 1);  //Moet hij hetzelfde controleren, maar dan voor een 3x3 grid ipv 4x4, totdat hij op een plek komt waar er een blokje bezet is (dus gaat eventueel door tot k = 1)
+                    }
+                }
+        }
     }
 }

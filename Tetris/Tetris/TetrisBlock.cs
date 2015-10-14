@@ -45,9 +45,8 @@ class TetrisBlock
                         timesturn = 1;
                         RotateRight();
                     }
-                }
             }
-        
+        }
         else if (inputHelper.KeyPressed(Keys.Down))                     //Beweegt naar beneden
         {
             blockFormPosition += new Vector2(0, 1 * TetrisGrid.cellheight);
