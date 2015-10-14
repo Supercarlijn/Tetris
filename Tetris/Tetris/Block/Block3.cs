@@ -13,7 +13,6 @@ class Block3 : TetrisBlock
         blockForm[1, 2] = color;
         blockForm[1, 3] = color;
         base.currentBlockForm = new Color[4, 4];
-        base.currentBlockForm = base.blockForm;
         base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van blockFormTexture
     }
 

@@ -51,8 +51,17 @@ class Options
                                      (int)((i.MousePosition.X - (screenWidth / 2 + (-12 * block.Width))) / block.Width)] = Color.Red;
                 }
             }
+
             if (i.MousePosition.X > (screenWidth / 2 + (-11 * block.Width)) && (i.MousePosition.Y > 5 * block.Height) && i.MousePosition.X < (screenWidth / 2 + (-9 * block.Width)) && (i.MousePosition.Y < 6 * block.Height))
-                block1.CurrentBlockForm = block1.OldBlockForm;
+            {
+                for (int m = 0; m < 4; m++)
+                {
+                    block1.CurrentBlockForm[m, 0] = Color.White;
+                    block1.CurrentBlockForm[m, 1] = Color.Red;
+                    block1.CurrentBlockForm[m, 2] = Color.White;
+                    block1.CurrentBlockForm[m, 3] = Color.White;
+                }
+            }
 
             if (i.MousePosition.X > (screenWidth / 2 + (-7 * block.Width)) && (i.MousePosition.Y > block.Height) && i.MousePosition.X < (screenWidth / 2 + (-3 * block.Width)) && (i.MousePosition.Y < 5 * block.Height))
             {
@@ -70,8 +79,21 @@ class Options
                                      (int)((i.MousePosition.X - (screenWidth / 2 + (-7 * block.Width))) / block.Width)] = Color.Yellow;
                 }
             }
-            if (i.MousePosition.X > (screenWidth / 2 + (-6 * block.Width)) && (i.MousePosition.Y > 5 * block.Height) && i.MousePosition.X < (screenWidth / 2 + (-4 * block.Width)) && (i.MousePosition.Y < 6 * block.Height))
-                block2.CurrentBlockForm = block2.OldBlockForm;
+
+            if (i.MousePosition.X > (screenWidth / 2 + (-6 * block.Width)) && (i.MousePosition.Y > 5 * block.Height) && i.MousePosition.X < (screenWidth / 2 + (-3 * block.Width)) && (i.MousePosition.Y < 6 * block.Height))
+            {
+                for (int m = 0; m < 4; m++)
+                {
+                    block2.CurrentBlockForm[m, 0] = Color.White;
+                    block2.CurrentBlockForm[m, 1] = Color.White;
+                    block2.CurrentBlockForm[m, 2] = Color.White;
+                    block2.CurrentBlockForm[m, 3] = Color.White;
+                }
+                block2.CurrentBlockForm[1, 1] = Color.Yellow;
+                block2.CurrentBlockForm[1, 2] = Color.Yellow;
+                block2.CurrentBlockForm[2, 1] = Color.Yellow;
+                block2.CurrentBlockForm[2, 2] = Color.Yellow;
+            }
 
             if (i.MousePosition.X > (screenWidth / 2 + (-2 * block.Width)) && (i.MousePosition.Y > block.Height) && i.MousePosition.X < (screenWidth / 2 + (2 * block.Width)) && (i.MousePosition.Y < 5 * block.Height))
             {
@@ -89,9 +111,22 @@ class Options
                                      (int)((i.MousePosition.X - (screenWidth / 2 + (-2 * block.Width))) / block.Width)] = Color.Green;
                 }
             }
+            
             if (i.MousePosition.X > (screenWidth / 2 + (-1 * block.Width)) && (i.MousePosition.Y > 5 * block.Height) && i.MousePosition.X < (screenWidth / 2 + (1 * block.Width)) && (i.MousePosition.Y < 6 * block.Height))
-                block3.CurrentBlockForm = block3.OldBlockForm;
-
+            {
+                for (int m = 0; m < 4; m++)
+                {
+                    block3.CurrentBlockForm[m, 0] = Color.White;
+                    block3.CurrentBlockForm[m, 1] = Color.White;
+                    block3.CurrentBlockForm[m, 2] = Color.White;
+                    block3.CurrentBlockForm[m, 3] = Color.White;
+                }
+                block3.CurrentBlockForm[0, 1] = Color.Green;
+                block3.CurrentBlockForm[1, 1] = Color.Green;
+                block3.CurrentBlockForm[1, 0] = Color.Green;
+                block3.CurrentBlockForm[1, 2] = Color.Green;
+            }
+            
             if (i.MousePosition.X > (screenWidth / 2 + (3 * block.Width)) && (i.MousePosition.Y > block.Height) && i.MousePosition.X < (screenWidth / 2 + (7 * block.Width)) && (i.MousePosition.Y < 5 * block.Height))
             {
 
@@ -108,6 +143,22 @@ class Options
                                      (int)((i.MousePosition.X - (screenWidth / 2 + (3 * block.Width))) / block.Width)] = Color.Blue;
                 }
             }
+
+            if (i.MousePosition.X > (screenWidth / 2 + (4 * block.Width)) && (i.MousePosition.Y > 5 * block.Height) && i.MousePosition.X < (screenWidth / 2 + (6 * block.Width)) && (i.MousePosition.Y < 6 * block.Height))
+            {
+                for (int m = 0; m < 4; m++)
+                {
+                    block4.CurrentBlockForm[m, 0] = Color.White;
+                    block4.CurrentBlockForm[m, 1] = Color.White;
+                    block4.CurrentBlockForm[m, 2] = Color.White;
+                    block4.CurrentBlockForm[m, 3] = Color.White;
+                }
+                block4.CurrentBlockForm[0, 2] = Color.Blue;
+                block4.CurrentBlockForm[1, 2] = Color.Blue;
+                block4.CurrentBlockForm[1, 1] = Color.Blue;
+                block4.CurrentBlockForm[2, 1] = Color.Blue;
+            }
+
             if (i.MousePosition.X > (screenWidth / 2 + (8 * block.Width)) && (i.MousePosition.Y > block.Height) && i.MousePosition.X < (screenWidth / 2 + (12 * block.Width)) && (i.MousePosition.Y < 5 * block.Height))
             {
 
@@ -124,6 +175,22 @@ class Options
                                      (int)((i.MousePosition.X - (screenWidth / 2 + (8 * block.Width))) / block.Width)] = Color.Purple;
                 }
             }
+
+            if (i.MousePosition.X > (screenWidth / 2 + (9 * block.Width)) && (i.MousePosition.Y > 5 * block.Height) && i.MousePosition.X < (screenWidth / 2 + (11 * block.Width)) && (i.MousePosition.Y < 6 * block.Height))
+            {
+                for (int m = 0; m < 4; m++)
+                {
+                    block5.CurrentBlockForm[m, 0] = Color.White;
+                    block5.CurrentBlockForm[m, 1] = Color.White;
+                    block5.CurrentBlockForm[m, 2] = Color.White;
+                    block5.CurrentBlockForm[m, 3] = Color.White;
+                }
+                block5.CurrentBlockForm[0, 1] = Color.Purple;
+                block5.CurrentBlockForm[1, 1] = Color.Purple;
+                block5.CurrentBlockForm[1, 2] = Color.Purple;
+                block5.CurrentBlockForm[2, 2] = Color.Purple;
+            }
+
             if (i.MousePosition.X > (screenWidth / 2 + (-12 * block.Width)) && (i.MousePosition.Y > 7 * block.Height) && i.MousePosition.X < (screenWidth / 2 + (-8 * block.Width)) && (i.MousePosition.Y < 11 * block.Height))
             {
 
@@ -141,6 +208,22 @@ class Options
                 }
 
             }
+
+            if (i.MousePosition.X > (screenWidth / 2 + (-11 * block.Width)) && (i.MousePosition.Y > 11 * block.Height) && i.MousePosition.X < (screenWidth / 2 + (-9 * block.Width)) && (i.MousePosition.Y < 12 * block.Height))
+            {
+                for (int m = 0; m < 4; m++)
+                {
+                    block6.CurrentBlockForm[m, 0] = Color.White;
+                    block6.CurrentBlockForm[m, 1] = Color.White;
+                    block6.CurrentBlockForm[m, 2] = Color.White;
+                    block6.CurrentBlockForm[m, 3] = Color.White;
+                }
+                block6.CurrentBlockForm[0, 1] = Color.DarkOrange;
+                block6.CurrentBlockForm[1, 1] = Color.DarkOrange;
+                block6.CurrentBlockForm[2, 1] = Color.DarkOrange;
+                block6.CurrentBlockForm[2, 2] = Color.DarkOrange;
+            }
+
             if (i.MousePosition.X > (screenWidth / 2 + (8 * block.Width)) && (i.MousePosition.Y > 7 * block.Height) && i.MousePosition.X < (screenWidth / 2 + (12 * block.Width)) && (i.MousePosition.Y < 11 * block.Height))
             {
 
@@ -157,7 +240,22 @@ class Options
                                         (int)((i.MousePosition.X - (screenWidth / 2 + (8 * block.Width))) / block.Width)] = Color.DeepPink;
                 }
 
-            }            
+            }
+
+            if (i.MousePosition.X > (screenWidth / 2 + (9 * block.Width)) && (i.MousePosition.Y > 11 * block.Height) && i.MousePosition.X < (screenWidth / 2 + (11 * block.Width)) && (i.MousePosition.Y < 12 * block.Height))
+            {
+                for (int m = 0; m < 4; m++)
+                {
+                    block7.CurrentBlockForm[m, 0] = Color.White;
+                    block7.CurrentBlockForm[m, 1] = Color.White;
+                    block7.CurrentBlockForm[m, 2] = Color.White;
+                    block7.CurrentBlockForm[m, 3] = Color.White;
+                }
+                block7.CurrentBlockForm[0, 2] = Color.DeepPink;
+                block7.CurrentBlockForm[1, 2] = Color.DeepPink;
+                block7.CurrentBlockForm[2, 2] = Color.DeepPink;
+                block7.CurrentBlockForm[2, 1] = Color.DeepPink;
+            }
         }            
     }
 
