@@ -9,6 +9,7 @@ class TetrisGrid
     Texture2D gridblock;                        //Het blokje waar het speelveld uit bestaat
     Vector2 position;                           //De positie van het grid
     public static int cellwidth, cellheight;    //De afmetingen van één cel in grid
+    static Rectangle field;
 
     public TetrisGrid(Texture2D b)
     {
@@ -26,29 +27,30 @@ class TetrisGrid
         for (int i = 0; i < 20; i++)            //Zet elke plek in het speelveld op onbezet
             for (int j = 0; j < 12; j++)
                 occupied[i, j] = Color.White;
+        
+        field = new Rectangle(0, 0, 12 * cellwidth, 20 * cellheight);
         this.Clear();
     }
 
     //Controleert of een blokje in de nieuwe positie (deels) uit het speelveld is
-    public static bool IsOutOfField(Vector2 blockFormPosition, Vector2 blockPosition, Vector2 offset)
+    public static bool IsOutOfField(Vector2 blockFormPosition, Color[,] blockForm, Color color)
     {
-        return ((blockFormPosition.X + blockPosition.X * cellwidth < 0) ||                      //Kijkt of block aan de linkerkant eruit is
-            (blockFormPosition.X > 12 * cellwidth - 4 * cellwidth + offset.X * cellwidth) ||    //Kijkt of block aan de rechterkant eruit is
-            (blockFormPosition.Y > 20 * cellheight - 4 * cellwidth + offset.Y * cellheight));   //Kijkt of block aan de onderkant eruit is
-    }
-
-    public static bool IsUnderField(Vector2 blockFormPosition, Vector2 blockPosition, Vector2 offset, int p)
-    {
-        return (blockFormPosition.Y > 20 * cellheight - 4 * cellwidth + offset.Y * cellheight);
-    }
-
-    //Controleert of een blokje geroteerd had mogen worden, true staat hier voor dat het niet had gemogen.
-    public static bool CannotRotate(Vector2 blockFormPosition, Vector2 blockPosition, int blockwidth, int blockheight)
-    {
-        return ((blockFormPosition.X + blockPosition.X * cellwidth < 0) ||                                  //Kijkt of block aan de linkerkant eruit is 
-                (blockwidth + blockFormPosition.X + blockPosition.X * cellwidth > 12 * cellwidth) ||        //KIJKT OF BLOCK AAN DE RECHTERKANT ERUIT IS
-                (blockFormPosition.Y < 0) ||                                  //Kijkt of block aan de bovenkant eruit is
-                (blockheight + blockFormPosition.Y > 20 * cellheight));       //Kijkt of block aan de onder kant eruit is
+        Vector2 pos;
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (blockForm[i, j] == color)
+                {
+                    pos = new Vector2(j * cellwidth + blockFormPosition.X, i * cellheight + blockFormPosition.Y);
+                    if (!field.Contains((int)pos.X, (int)pos.Y))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     //Controleert of een blokje verplaatst had mogen worden, true staat hier voor dat het niet had gemogen.
@@ -59,7 +61,8 @@ class TetrisGrid
             {
                 if (blockForm[i, j] == color)   //Kijkt of de plek in blockForm bezet is en daarna of die plek in het speelveld ook bezet is, geeft dan true terug
                 {
-                    if ((occupied[i + ((int)blockFormPosition.Y / cellheight), j + ((int)blockFormPosition.X / cellwidth)] != Color.White)) //PROBLEEM HIER
+                    Console.WriteLine(new Vector2(j + ((int)blockFormPosition.X / cellwidth), i + ((int)blockFormPosition.Y / cellheight)));
+                    if ((occupied[i + ((int)blockFormPosition.Y / cellheight), j + ((int)blockFormPosition.X / cellwidth)] != Color.White))
                     {
                         return true;
                     }

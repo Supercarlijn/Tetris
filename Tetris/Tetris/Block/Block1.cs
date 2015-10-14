@@ -7,7 +7,7 @@ class Block1 : TetrisBlock
     int oldwidth, oldheight;
     Vector2 oldoffset;
     
-    public Block1(Color color, Texture2D sprite)
+    public Block1(Texture2D sprite)
         : base("block1")
     {
         base.width = TetrisGrid.cellwidth;

@@ -45,33 +45,19 @@ class GameWorld
         i = (int)random.Next(7) + 1;
 
         blocks = new BlockList();
-        Color color;                        //De kleur van het blokje
-        int p = Random.Next(6);
-        if (p == 0)                          //Bepaalt de kleur dmv de random generator
-            color = Color.Red;
-        else if (p == 1)
-            color = Color.Yellow;
-        else if (p == 2)
-            color = Color.Green;
-        else if (p == 3)
-            color = Color.Blue;
-        else if (p == 4)
-            color = Color.Purple;
-        else
-            color = Color.Orange;
-        block1 = new Block1(color, block);
+        block1 = new Block1(block);
         blocks.Add(block1, 1);
-        block2 = new Block2(color, block);
+        block2 = new Block2(block);
         blocks.Add(block2, 2);
-        block3 = new Block3(color, block);
+        block3 = new Block3(block);
         blocks.Add(block3, 3);
-        block4 = new Block4(color, block);
+        block4 = new Block4(block);
         blocks.Add(block4, 4);
-        block5 = new Block5(color, block);
+        block5 = new Block5(block);
         blocks.Add(block5, 5);
-        block6 = new Block6(color, block);
+        block6 = new Block6(block);
         blocks.Add(block6, 6);
-        block7 = new Block7(color, block);
+        block7 = new Block7(block);
         blocks.Add(block7, 7);
         options = new Options(block, reset, width, height, font, blocks);
     }
