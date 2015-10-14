@@ -7,16 +7,13 @@ class Block7 : TetrisBlock
         : base("block7", sprite)
     {
         base.color = Color.DeepPink;
+        base.p = 4;
         base.blockForm = new Color[4, 4];
-        blockForm[0, 2] = color;
-        blockForm[1, 2] = color;
-        blockForm[2, 2] = color;
-        blockForm[2, 1] = color;
+        base.blockForm[0, 2] = color;
+        base.blockForm[1, 2] = color;
+        base.blockForm[2, 2] = color;
+        base.blockForm[2, 1] = color;
         base.currentBlockForm = new Color[4, 4];
-        blockForm[0, 2] = base.color;
-        blockForm[1, 2] = base.color;
-        blockForm[2, 2] = base.color;
-        blockForm[2, 1] = base.color;
         base.currentBlockForm = base.blockForm;
         base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van blockFormTexture
     }

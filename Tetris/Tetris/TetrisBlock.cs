@@ -7,7 +7,7 @@ class TetrisBlock
 {
     protected Color[,] blockForm, currentBlockForm, oldBlockForm;                       //Houdt bij wat de vorm is van een blok
     protected Vector2 blockFormPosition;
-    protected int timesturn;
+    protected int timesturn, p; //p = de lengte van het "grid" dat gedraaid moet worden
     public bool newBlock;
     protected Color color;
     TimeSpan timelimit;
@@ -87,27 +87,27 @@ class TetrisBlock
 
     public void RotateRight()
     {
-            Color[,] result = new Color[4, 4];
-            for (int i = 0; i < 4; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
-                for (int j = 0; j < 4; j++)
+            Color[,] result = new Color[p, p];
+            for (int i = 0; i < p; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
+                for (int j = 0; j < p; j++)
                 {
-                    result[i, j] = blockForm[3 - j, i];
+                    result[i, j] = blockForm[p - j - 1, i];
                 }
-            for (int i = 0; i < 4; i++)
-                for (int j = 0; j < 4; j++)
+            for (int i = 0; i < p; i++)
+                for (int j = 0; j < p; j++)
                     blockForm[i, j] = result[i, j];
     }
 
     public void RotateLeft()
     {
-        Color[,] result = new Color[4, 4];
-        for (int i = 0; i < 4; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
-            for (int j = 0; j < 4; j++)
+        Color[,] result = new Color[p, p];
+        for (int i = 0; i < p; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
+            for (int j = 0; j < p; j++)
             {
-                result[i, j] = blockForm[j, 3 - i];
+                result[i, j] = blockForm[j, p - i - 1];
             }
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 4; j++)
+        for (int i = 0; i < p; i++)
+            for (int j = 0; j < p; j++)
                 blockForm[i, j] = result[i, j];
     }
 
@@ -178,5 +178,11 @@ class TetrisBlock
     public Color Color
     {
         get { return color; }
+    }
+
+    public int ArrayRotatingLength
+    {
+        get { return p; }
+        set { p = value; }
     }
 }

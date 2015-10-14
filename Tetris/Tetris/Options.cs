@@ -42,7 +42,9 @@ class Options
                                      (int)((i.MousePosition.X - (screenWidth / 2 + (-12 * block.Width))) / block.Width)] == Color.Red)
                 {
                     block1.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
-                                     (int)((i.MousePosition.X - (screenWidth / 2 + (-12 * block.Width))) / block.Width)] = Color.White;
+                                     (int)((i.MousePosition.X - (screenWidth / 2 + (-12 * block.Width))) / block.Width)] = Color.Black;
+                    block1.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
+                                     (int)((i.MousePosition.X - (screenWidth / 2 + (-12 * block.Width))) / block.Width)].A = 0;
                 }
                 else if (block1.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
                                           (int)((i.MousePosition.X - (screenWidth / 2 + (-12 * block.Width))) / block.Width)] != Color.Red)
@@ -56,10 +58,13 @@ class Options
             {
                 for (int m = 0; m < 4; m++)
                 {
-                    block1.CurrentBlockForm[m, 0] = Color.White;
+                    block1.CurrentBlockForm[m, 0] = Color.Black;
+                    block1.CurrentBlockForm[m, 0].A = 0;
                     block1.CurrentBlockForm[m, 1] = Color.Red;
-                    block1.CurrentBlockForm[m, 2] = Color.White;
-                    block1.CurrentBlockForm[m, 3] = Color.White;
+                    block1.CurrentBlockForm[m, 2] = Color.Black;
+                    block1.CurrentBlockForm[m, 2].A = 0;
+                    block1.CurrentBlockForm[m, 3] = Color.Black;
+                    block1.CurrentBlockForm[m, 3].A = 0;
                 }
             }
 
@@ -70,7 +75,9 @@ class Options
                                      (int)((i.MousePosition.X - (screenWidth / 2 + (-7 * block.Width))) / block.Width)] == Color.Yellow)
                 {
                     block2.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
-                                     (int)((i.MousePosition.X - (screenWidth / 2 + (-7 * block.Width))) / block.Width)] = Color.White;
+                                     (int)((i.MousePosition.X - (screenWidth / 2 + (-7 * block.Width))) / block.Width)] = Color.Black;
+                    block2.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
+                                     (int)((i.MousePosition.X - (screenWidth / 2 + (-7 * block.Width))) / block.Width)].A = 0;
                 }
                 else if (block2.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
                                           (int)((i.MousePosition.X - (screenWidth / 2 + (-7 * block.Width))) / block.Width)] != Color.Yellow)
@@ -84,10 +91,14 @@ class Options
             {
                 for (int m = 0; m < 4; m++)
                 {
-                    block2.CurrentBlockForm[m, 0] = Color.White;
-                    block2.CurrentBlockForm[m, 1] = Color.White;
-                    block2.CurrentBlockForm[m, 2] = Color.White;
-                    block2.CurrentBlockForm[m, 3] = Color.White;
+                    block2.CurrentBlockForm[m, 0] = Color.Black;
+                    block2.CurrentBlockForm[m, 0].A = 0;
+                    block2.CurrentBlockForm[m, 1] = Color.Black;
+                    block2.CurrentBlockForm[m, 1].A = 0;
+                    block2.CurrentBlockForm[m, 2] = Color.Black;
+                    block2.CurrentBlockForm[m, 2].A = 0;
+                    block2.CurrentBlockForm[m, 3] = Color.Black;
+                    block2.CurrentBlockForm[m, 3].A = 0;
                 }
                 block2.CurrentBlockForm[1, 1] = Color.Yellow;
                 block2.CurrentBlockForm[1, 2] = Color.Yellow;
@@ -102,7 +113,9 @@ class Options
                                      (int)((i.MousePosition.X - (screenWidth / 2 + (-2 * block.Width))) / block.Width)] == Color.Green)
                 {
                     block3.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
-                                     (int)((i.MousePosition.X - (screenWidth / 2 + (-2 * block.Width))) / block.Width)] = Color.White;
+                                     (int)((i.MousePosition.X - (screenWidth / 2 + (-2 * block.Width))) / block.Width)] = Color.Black;
+                    block3.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
+                                     (int)((i.MousePosition.X - (screenWidth / 2 + (-2 * block.Width))) / block.Width)].A = 0;
                 }
                 else if (block3.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
                                           (int)((i.MousePosition.X - (screenWidth / 2 + (-2 * block.Width))) / block.Width)] != Color.Green)
@@ -116,10 +129,14 @@ class Options
             {
                 for (int m = 0; m < 4; m++)
                 {
-                    block3.CurrentBlockForm[m, 0] = Color.White;
-                    block3.CurrentBlockForm[m, 1] = Color.White;
-                    block3.CurrentBlockForm[m, 2] = Color.White;
-                    block3.CurrentBlockForm[m, 3] = Color.White;
+                    block3.CurrentBlockForm[m, 0] = Color.Black;
+                    block3.CurrentBlockForm[m, 0].A = 0;
+                    block3.CurrentBlockForm[m, 1] = Color.Black;
+                    block3.CurrentBlockForm[m, 1].A = 0;
+                    block3.CurrentBlockForm[m, 2] = Color.Black;
+                    block3.CurrentBlockForm[m, 2].A = 0;
+                    block3.CurrentBlockForm[m, 3] = Color.Black;
+                    block3.CurrentBlockForm[m, 3].A = 0;
                 }
                 block3.CurrentBlockForm[0, 1] = Color.Green;
                 block3.CurrentBlockForm[1, 1] = Color.Green;
@@ -134,7 +151,9 @@ class Options
                                      (int)((i.MousePosition.X - (screenWidth / 2 + (3 * block.Width))) / block.Width)] == Color.Blue)
                 {
                     block4.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
-                                     (int)((i.MousePosition.X - (screenWidth / 2 + (3 * block.Width))) / block.Width)] = Color.White;
+                                     (int)((i.MousePosition.X - (screenWidth / 2 + (3 * block.Width))) / block.Width)] = Color.Black;
+                    block4.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
+                                     (int)((i.MousePosition.X - (screenWidth / 2 + (3 * block.Width))) / block.Width)].A = 0;
                 }
                 else if (block4.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
                                           (int)((i.MousePosition.X - (screenWidth / 2 + (3 * block.Width))) / block.Width)] != Color.Blue)
@@ -148,10 +167,14 @@ class Options
             {
                 for (int m = 0; m < 4; m++)
                 {
-                    block4.CurrentBlockForm[m, 0] = Color.White;
-                    block4.CurrentBlockForm[m, 1] = Color.White;
-                    block4.CurrentBlockForm[m, 2] = Color.White;
-                    block4.CurrentBlockForm[m, 3] = Color.White;
+                    block4.CurrentBlockForm[m, 0] = Color.Black;
+                    block4.CurrentBlockForm[m, 0].A = 0;
+                    block4.CurrentBlockForm[m, 1] = Color.Black;
+                    block4.CurrentBlockForm[m, 1].A = 0;
+                    block4.CurrentBlockForm[m, 2] = Color.Black;
+                    block4.CurrentBlockForm[m, 2].A = 0;
+                    block4.CurrentBlockForm[m, 3] = Color.Black;
+                    block4.CurrentBlockForm[m, 3].A = 0;
                 }
                 block4.CurrentBlockForm[0, 2] = Color.Blue;
                 block4.CurrentBlockForm[1, 2] = Color.Blue;
@@ -166,7 +189,9 @@ class Options
                                      (int)((i.MousePosition.X - (screenWidth / 2 + (8 * block.Width))) / block.Width)] == Color.Purple)
                 {
                     block5.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
-                                     (int)((i.MousePosition.X - (screenWidth / 2 + (8 * block.Width))) / block.Width)] = Color.White;
+                                     (int)((i.MousePosition.X - (screenWidth / 2 + (8 * block.Width))) / block.Width)] = Color.Black;
+                    block5.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
+                                     (int)((i.MousePosition.X - (screenWidth / 2 + (8 * block.Width))) / block.Width)].A = 0;
                 }
                 else if (block5.CurrentBlockForm[(int)((i.MousePosition.Y - block.Height) / block.Height),
                                           (int)((i.MousePosition.X - (screenWidth / 2 + (8 * block.Width))) / block.Width)] != Color.Purple)
@@ -180,10 +205,14 @@ class Options
             {
                 for (int m = 0; m < 4; m++)
                 {
-                    block5.CurrentBlockForm[m, 0] = Color.White;
-                    block5.CurrentBlockForm[m, 1] = Color.White;
-                    block5.CurrentBlockForm[m, 2] = Color.White;
-                    block5.CurrentBlockForm[m, 3] = Color.White;
+                    block5.CurrentBlockForm[m, 0] = Color.Black;
+                    block5.CurrentBlockForm[m, 0].A = 0;
+                    block5.CurrentBlockForm[m, 1] = Color.Black;
+                    block5.CurrentBlockForm[m, 1].A = 0;
+                    block5.CurrentBlockForm[m, 2] = Color.Black;
+                    block5.CurrentBlockForm[m, 2].A = 0;
+                    block5.CurrentBlockForm[m, 3] = Color.Black;
+                    block5.CurrentBlockForm[m, 3].A = 0;
                 }
                 block5.CurrentBlockForm[0, 1] = Color.Purple;
                 block5.CurrentBlockForm[1, 1] = Color.Purple;
@@ -198,7 +227,9 @@ class Options
                                         (int)((i.MousePosition.X - (screenWidth / 2 + (-12 * block.Width))) / block.Width)] == Color.DarkOrange)
                 {
                     block6.CurrentBlockForm[(int)((i.MousePosition.Y - 7 * block.Height) / block.Height),
-                                        (int)((i.MousePosition.X - (screenWidth / 2 + (-12 * block.Width))) / block.Width)] = Color.White;
+                                        (int)((i.MousePosition.X - (screenWidth / 2 + (-12 * block.Width))) / block.Width)] = Color.Black;
+                    block6.CurrentBlockForm[(int)((i.MousePosition.Y - 7 * block.Height) / block.Height),
+                                        (int)((i.MousePosition.X - (screenWidth / 2 + (-12 * block.Width))) / block.Width)].A = 0;
                 }
                 else if (block6.CurrentBlockForm[(int)((i.MousePosition.Y - 7 * block.Height) / block.Height),
                                             (int)((i.MousePosition.X - (screenWidth / 2 + (-12 * block.Width))) / block.Width)] != Color.DarkOrange)
@@ -213,10 +244,14 @@ class Options
             {
                 for (int m = 0; m < 4; m++)
                 {
-                    block6.CurrentBlockForm[m, 0] = Color.White;
-                    block6.CurrentBlockForm[m, 1] = Color.White;
-                    block6.CurrentBlockForm[m, 2] = Color.White;
-                    block6.CurrentBlockForm[m, 3] = Color.White;
+                    block6.CurrentBlockForm[m, 0] = Color.Black;
+                    block6.CurrentBlockForm[m, 0].A = 0;
+                    block6.CurrentBlockForm[m, 1] = Color.Black;
+                    block6.CurrentBlockForm[m, 1].A = 0;
+                    block6.CurrentBlockForm[m, 2] = Color.Black;
+                    block6.CurrentBlockForm[m, 2].A = 0;
+                    block6.CurrentBlockForm[m, 3] = Color.Black;
+                    block6.CurrentBlockForm[m, 3].A = 0;
                 }
                 block6.CurrentBlockForm[0, 1] = Color.DarkOrange;
                 block6.CurrentBlockForm[1, 1] = Color.DarkOrange;
@@ -231,7 +266,9 @@ class Options
                                         (int)((i.MousePosition.X - (screenWidth / 2 + (8 * block.Width))) / block.Width)] == Color.DeepPink)
                 {
                     block7.CurrentBlockForm[(int)((i.MousePosition.Y - 7 * block.Height) / block.Height),
-                                        (int)((i.MousePosition.X - (screenWidth / 2 + (8 * block.Width))) / block.Width)] = Color.White;
+                                        (int)((i.MousePosition.X - (screenWidth / 2 + (8 * block.Width))) / block.Width)] = Color.Black;
+                    block7.CurrentBlockForm[(int)((i.MousePosition.Y - 7 * block.Height) / block.Height),
+                                        (int)((i.MousePosition.X - (screenWidth / 2 + (8 * block.Width))) / block.Width)].A = 0;
                 }
                 else if (block7.CurrentBlockForm[(int)((i.MousePosition.Y - 7 * block.Height) / block.Height),
                                             (int)((i.MousePosition.X - (screenWidth / 2 + (8 * block.Width))) / block.Width)] != Color.DeepPink)
@@ -246,10 +283,14 @@ class Options
             {
                 for (int m = 0; m < 4; m++)
                 {
-                    block7.CurrentBlockForm[m, 0] = Color.White;
-                    block7.CurrentBlockForm[m, 1] = Color.White;
-                    block7.CurrentBlockForm[m, 2] = Color.White;
-                    block7.CurrentBlockForm[m, 3] = Color.White;
+                    block7.CurrentBlockForm[m, 0] = Color.Black;
+                    block7.CurrentBlockForm[m, 0].A = 0;
+                    block7.CurrentBlockForm[m, 1] = Color.Black;
+                    block7.CurrentBlockForm[m, 1].A = 0;
+                    block7.CurrentBlockForm[m, 2] = Color.Black;
+                    block7.CurrentBlockForm[m, 2].A = 0;
+                    block7.CurrentBlockForm[m, 3] = Color.Black;
+                    block7.CurrentBlockForm[m, 3].A = 0;
                 }
                 block7.CurrentBlockForm[0, 2] = Color.DeepPink;
                 block7.CurrentBlockForm[1, 2] = Color.DeepPink;
