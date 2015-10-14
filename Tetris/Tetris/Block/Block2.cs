@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 class Block2 : TetrisBlock
 {
-    Color[,] oldblockForm;
     int oldwidth, oldheight;
     Vector2 oldoffset;
     
@@ -16,17 +15,19 @@ class Block2 : TetrisBlock
         oldwidth = base.width;
         oldheight = base.height;
 
-        base.color = color;
+        base.color = Color.Yellow;
         base.blockForm = new Color[4, 4];
-        oldblockForm = new Color[4, 4];
+       base.oldBlockForm = new Color[4, 4];
+        base.currentBlockForm = new Color[4, 4];
         for (int i = 1; i < 3; i++)         //Geeft aan welke delen bezet zijn en met welke kleur
         {
             for (int j = 1; j < 3; j++)
             {
                 base.blockForm[i, j] = base.color;
-                oldblockForm = new Color[4, 4];
+                base.oldBlockForm[i, j] = base.color;
             }
         }
+        base.currentBlockForm = base.blockForm;
 
         base.blockFormTexture = new Texture2D[4, 4];
         for (int i = 0; i < 4; i++)
@@ -41,4 +42,6 @@ class Block2 : TetrisBlock
     {
         blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);
     }
+    
+
 }

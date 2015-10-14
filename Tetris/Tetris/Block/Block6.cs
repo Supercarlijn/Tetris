@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 class Block6 : TetrisBlock
 {
-    Color[,] oldblockForm;
     int oldwidth, oldheight;
     Vector2 oldoffset;
     
@@ -16,17 +15,16 @@ class Block6 : TetrisBlock
         oldwidth = base.width;
         oldheight = base.height;
 
-        base.color = color;
+        base.color = Color.DarkOrange;
         base.blockForm = new Color[4, 4];
-        blockForm[0, 1] = color;
-        blockForm[1, 1] = color;
-        blockForm[2, 1] = color;
-        blockForm[2, 2] = color;
-        oldblockForm = new Color[4, 4];
-        oldblockForm[0, 1] = color;
-        oldblockForm[1, 1] = color;
-        oldblockForm[2, 1] = color;
-        oldblockForm[2, 2] = color;
+        base.currentBlockForm = new Color[4, 4];
+        blockForm[0, 1] = base.color;
+        blockForm[1, 1] = base.color;
+        blockForm[2, 1] = base.color;
+        blockForm[2, 2] = base.color;
+       base.oldBlockForm = new Color[4, 4];
+       base.oldBlockForm = base.blockForm;
+        base.currentBlockForm = base.blockForm;
 
         base.blockFormTexture = new Texture2D[4, 4];
         for (int i = 0; i < 4; i++)
@@ -40,10 +38,7 @@ class Block6 : TetrisBlock
     public override void Reset()
     {
         blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);
-        timesturn = 0;
-        blockForm = oldblockForm;
-        base.width = oldwidth;
-        base.height = oldheight;
-        base.offset = oldoffset;
     }
+
+
 }
