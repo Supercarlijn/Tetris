@@ -23,10 +23,7 @@ class Block4 : TetrisBlock
         blockForm[1, 2] = color;
         blockForm[2, 1] = color;
         oldblockForm = new Color[4, 4];
-        oldblockForm[0, 2] = color;
-        oldblockForm[1, 1] = color;
-        oldblockForm[1, 2] = color;
-        oldblockForm[2, 1] = color;
+        oldblockForm = base.blockForm;
 
         base.blockFormTexture = new Texture2D[4, 4];
         for (int i = 0; i < 4; i++)

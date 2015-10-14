@@ -49,7 +49,7 @@ class TetrisBlock
             this.blockPosition = CalculateBlockPosition();
             this.offset = SetOffset();
 
-            if(TetrisGrid.CannotRotate(blockFormPosition, blockPosition, this.width, this.height) || TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
+            if(TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color)/* || TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color)*/)
             {
                 if (!(block == "block1" || block == "block4" || block == "block5"))
                 {
@@ -87,7 +87,7 @@ class TetrisBlock
             }
             blockFormPosition += new Vector2(0, 1 * TetrisGrid.cellheight);
             timelimit = TimeSpan.FromSeconds(1);
-            if (TetrisGrid.IsOutOfField(blockFormPosition, this.blockPosition, this.offset) || (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color)))
+            if (TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color)/* || (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))*/)
             {
                 blockFormPosition -= new Vector2(0, 1 * TetrisGrid.cellheight);
                 TetrisGrid.FillOccupiedField(color, blockForm, blockFormPosition);
@@ -101,14 +101,14 @@ class TetrisBlock
                 this.height = height;
             }
             blockFormPosition += new Vector2(-1 * TetrisGrid.cellwidth, 0);
-            if (TetrisGrid.IsOutOfField(blockFormPosition, this.blockPosition, this.offset))
+            if (TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color))
             {
                 blockFormPosition += new Vector2(1 * TetrisGrid.cellwidth, 0);
             }
-            if (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
+            /*if (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
             {
                 blockFormPosition += new Vector2(1 * TetrisGrid.cellwidth, 0);
-            }
+            }*/
         }
         else if (inputHelper.KeyPressed(Keys.Right))                    //Beweegt naar rechts
         {
@@ -118,14 +118,14 @@ class TetrisBlock
                 this.height = height;
             }
             blockFormPosition += new Vector2(1 * TetrisGrid.cellwidth, 0);
-            if (TetrisGrid.IsOutOfField(blockFormPosition, this.blockPosition, this.offset))
+            if (TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color))
             {
                 blockFormPosition -= new Vector2(1 * TetrisGrid.cellwidth, 0);
             }
-            if (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
+            /*if (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
             {
                 blockFormPosition -= new Vector2(1 * TetrisGrid.cellwidth, 0);
-            }
+            }*/
         }
     }
 
@@ -228,7 +228,7 @@ class TetrisBlock
         {
             blockFormPosition += new Vector2(0, 1 * TetrisGrid.cellheight);
             timelimit = TimeSpan.FromSeconds(1);
-            if (TetrisGrid.IsOutOfField(blockFormPosition, this.blockPosition, this.offset) || (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color)))
+            if (TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color)/* || (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))*/)
             {
                 blockFormPosition -= new Vector2(0, 1 * TetrisGrid.cellheight);
                 TetrisGrid.FillOccupiedField(color, blockForm, blockFormPosition);
