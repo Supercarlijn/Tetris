@@ -7,7 +7,7 @@ class Block7 : TetrisBlock
     int oldwidth, oldheight;
     Vector2 oldoffset;
 
-    public Block7(Color color, Texture2D sprite)
+    public Block7(Texture2D sprite)
         : base("block7")
     {
         base.width = 2 * TetrisGrid.cellwidth;
@@ -16,7 +16,7 @@ class Block7 : TetrisBlock
         oldwidth = base.width;
         oldheight = base.height;
 
-        base.color = color;
+        base.color = Color.DeepPink;
         base.blockForm = new Color[4, 4];
         blockForm[0, 2] = color;
         blockForm[1, 2] = color;

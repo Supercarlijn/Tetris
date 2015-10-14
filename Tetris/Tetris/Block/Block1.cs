@@ -8,7 +8,7 @@ class Block1 : TetrisBlock
     int oldwidth, oldheight;
     Vector2 oldoffset;
     
-    public Block1(Color color, Texture2D sprite)
+    public Block1(Texture2D sprite)
         : base("block1")
     {
         base.width = TetrisGrid.cellwidth;
@@ -18,7 +18,7 @@ class Block1 : TetrisBlock
 
         base.blockPosition = new Vector2(1, 0);
 
-        base.color = color;
+        base.color = Color.Red;
         base.blockForm = new Color[4, 4];
         oldblockForm = new Color[4, 4];
         for (int i = 0; i < 4; i++)         //Geeft aan welke delen bezet zijn en met welke kleur

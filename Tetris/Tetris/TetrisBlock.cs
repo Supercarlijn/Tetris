@@ -91,7 +91,6 @@ class TetrisBlock
             {
                 blockFormPosition -= new Vector2(0, 1 * TetrisGrid.cellheight);
                 TetrisGrid.FillOccupiedField(color, blockForm, blockFormPosition);
-                CheckRows();
             }
         }
         else if (inputHelper.KeyPressed(Keys.Left))                     //Beweegt naar links
@@ -109,8 +108,6 @@ class TetrisBlock
             if (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
             {
                 blockFormPosition += new Vector2(1 * TetrisGrid.cellwidth, 0);
-                TetrisGrid.FillOccupiedField(color, blockForm, blockFormPosition);
-                CheckRows();
             }
         }
         else if (inputHelper.KeyPressed(Keys.Right))                    //Beweegt naar rechts
@@ -128,8 +125,6 @@ class TetrisBlock
             if (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
             {
                 blockFormPosition -= new Vector2(1 * TetrisGrid.cellwidth, 0);
-                TetrisGrid.FillOccupiedField(color, blockForm, blockFormPosition);
-                CheckRows();
             }
         }
     }
@@ -237,11 +232,10 @@ class TetrisBlock
             {
                 blockFormPosition -= new Vector2(0, 1 * TetrisGrid.cellheight);
                 TetrisGrid.FillOccupiedField(color, blockForm, blockFormPosition);
-                CheckRows();
                 newBlock = true;
-                //Reset();
             }
         }
+        CheckRows();
     }
 
     public void Draw(GameTime gameTime, SpriteBatch s)
