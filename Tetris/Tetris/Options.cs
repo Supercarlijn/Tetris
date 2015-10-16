@@ -290,10 +290,10 @@ class Options
                     block7.CurrentBlockForm[m, 3] = Color.Black;
                     block7.CurrentBlockForm[m, 3].A = 0;
                 }
-                block7.CurrentBlockForm[0, 2] = Color.DeepPink;
-                block7.CurrentBlockForm[1, 2] = Color.DeepPink;
-                block7.CurrentBlockForm[2, 2] = Color.DeepPink;
+                block7.CurrentBlockForm[0, 1] = Color.DeepPink;
+                block7.CurrentBlockForm[1, 1] = Color.DeepPink;
                 block7.CurrentBlockForm[2, 1] = Color.DeepPink;
+                block7.CurrentBlockForm[2, 0] = Color.DeepPink;
             }
         }            
     }
@@ -342,7 +342,8 @@ class Options
             spriteBatch.Draw(reset, new Vector2((screenWidth / 2 + (9 * block.Width)), block.Height * 11), null, Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
 
-        spriteBatch.DrawString(font, "In case of a block which fits in a 3x3 grid, place the schematic in the top left of the grid", new Vector2(0f, screenHeight - 24), Color.Black);
+            spriteBatch.DrawString(font, "Note when making custom blocks:", new Vector2(0f, screenHeight - 48), Color.Black);
+            spriteBatch.DrawString(font, "The rotating point will always be at the center of the smallest square grid from the top left", new Vector2(0f, screenHeight - 24), Color.Black);
     }
 
     //Deze methode moet aangeroepen worden voor elk blokje bij het sluiten van options, int k is daar dan 4 (voor elk blokje)

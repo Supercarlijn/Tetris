@@ -95,6 +95,16 @@ class TetrisBlock
             for (int i = 0; i < p; i++)
                 for (int j = 0; j < p; j++)
                     blockForm[i, j] = result[i, j];
+            if ((TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color) || TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color)))
+            {
+                if (!(TetrisGrid.IsOutOfField(blockFormPosition + new Vector2(sprite.Width, 0), blockForm, color) || TetrisGrid.CheckPlayField(blockFormPosition + new Vector2(sprite.Width, 0), blockForm, color)))
+                    blockFormPosition += new Vector2(sprite.Width, 0);
+                else if (!(TetrisGrid.IsOutOfField(blockFormPosition - new Vector2(sprite.Width, 0), blockForm, color) || TetrisGrid.CheckPlayField(blockFormPosition - new Vector2(sprite.Width, 0), blockForm, color)))
+                    blockFormPosition -= new Vector2(sprite.Width, 0);
+                else RotateLeft(); //GLITCH HIER
+            }
+                
+
     }
 
     public void RotateLeft()
@@ -108,6 +118,8 @@ class TetrisBlock
         for (int i = 0; i < p; i++)
             for (int j = 0; j < p; j++)
                 blockForm[i, j] = result[i, j];
+        if (TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color))
+            RotateRight();
     }
 
     public void CheckRows()

@@ -10,9 +10,9 @@ class Block2 : TetrisBlock
         base.p = 4;
         base.blockForm = new Color[4, 4];
         base.currentBlockForm = new Color[4, 4];
-        for (int i = 1; i < 3; i++)         //Geeft aan welke delen bezet zijn en met welke kleur
+        for (int i = 0; i < 2; i++)         //Geeft aan welke delen bezet zijn en met welke kleur
         {
-            for (int j = 1; j < 3; j++)
+            for (int j = 0; j < 2; j++)
             {
                 base.blockForm[i, j] = base.color;
             }
