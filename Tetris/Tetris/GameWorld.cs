@@ -84,6 +84,13 @@ class GameWorld
                 block5.BlockForm = block5.CurrentBlockForm;
                 block6.BlockForm = block6.CurrentBlockForm;
                 block7.BlockForm = block7.CurrentBlockForm;
+                options.CalculateArrayRotatingLength(block1, block1.Color, 4);
+                options.CalculateArrayRotatingLength(block2, block2.Color, 4);
+                options.CalculateArrayRotatingLength(block3, block3.Color, 4);
+                options.CalculateArrayRotatingLength(block4, block4.Color, 4);
+                options.CalculateArrayRotatingLength(block5, block5.Color, 4);
+                options.CalculateArrayRotatingLength(block6, block6.Color, 4);
+                options.CalculateArrayRotatingLength(block7, block7.Color, 4);
                 gameState = GameState.Playing;
             }
         }

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 
 class TetrisBlock
 {
-    protected Color[,] blockForm, currentBlockForm, oldBlockForm;                       //Houdt bij wat de vorm is van een blok
+    protected Color[,] blockForm, currentBlockForm;                       //Houdt bij wat de vorm is van een blok
     protected Vector2 blockFormPosition;
     protected int timesturn, p; //p = de lengte van het "grid" dat gedraaid moet worden
     public bool newBlock;
@@ -28,23 +28,11 @@ class TetrisBlock
     {
         if (inputHelper.KeyPressed(Keys.Up))                            //Roteert blokje
         {
-            timesturn++;                                                //Telt hoe vaak blokje is gedraaid
-            if (timesturn == 4)
-                timesturn = 0;
             RotateRight();
 
             if(TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color) || TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
             {
-                    if (timesturn == 1)
-                    {
-                        timesturn--;
-                        RotateLeft();
-                    }
-                    else
-                    {
-                        timesturn = 1;
-                        RotateRight();
-                    }
+                RotateLeft();
             }
         }
         else if (inputHelper.KeyPressed(Keys.Down))                     //Beweegt naar beneden
@@ -86,15 +74,15 @@ class TetrisBlock
 
     public void RotateRight()
     {
-            Color[,] result = new Color[p, p];
-            for (int i = 0; i < p; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
-                for (int j = 0; j < p; j++)
-                {
-                    result[i, j] = blockForm[p - j - 1, i];
-                }
-            for (int i = 0; i < p; i++)
-                for (int j = 0; j < p; j++)
-                    blockForm[i, j] = result[i, j];
+        Color[,] result = new Color[p, p];
+        for (int i = 0; i < p; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
+            for (int j = 0; j < p; j++)
+            {
+                result[i, j] = blockForm[p - j - 1, i];
+            }
+        for (int i = 0; i < p; i++)
+            for (int j = 0; j < p; j++)
+                blockForm[i, j] = result[i, j];
     }
 
     public void RotateLeft()
@@ -167,11 +155,6 @@ class TetrisBlock
     {
         get { return currentBlockForm; }
         set { currentBlockForm = value; }
-    }
-
-    public Color[,] OldBlockForm
-    {
-        get { return oldBlockForm; }
     }
 
     public Color Color

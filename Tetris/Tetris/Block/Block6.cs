@@ -7,7 +7,6 @@ class Block6 : TetrisBlock
         : base("block6", sprite)
     {
         base.color = Color.DarkOrange;
-        base.p = 4;
         base.blockForm = new Color[4, 4];
         base.currentBlockForm = new Color[4, 4];
         base.blockForm[0, 1] = base.color;
