@@ -105,6 +105,10 @@ class GameWorld
         }
         if (gameState == GameState.Options)
             options.Update();
+        if (gameState == GameState.GameOver)
+        {
+            gameState = GameState.Options; // TIJDELIJK
+        }
         if (gameState == GameState.Playing)
         { 
             blocks.Update(gameTime, i);
@@ -119,8 +123,20 @@ class GameWorld
                 block7.newBlock = false;
                 blocks.Reset(i);
                 i = (int)random.Next(7) + 1;
-            }    
+                
+            }
+            for (int x = 0; x < grid.Width; x++)
+                if (grid.Occupied[0, x] != Color.White)
+                {
+                    for (int y = 0; y < grid.Width; y++)
+                    {
+                        for (int z = 0; z < grid.Height; z++)
+                            grid.Occupied[z, y] = Color.White;
+                    }
+                    gameState = GameState.GameOver;
+                }
         }
+        
     }
 
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

@@ -349,19 +349,16 @@ class Options
     //Deze methode moet aangeroepen worden voor elk blokje bij het sluiten van options, int k is daar dan 4 (voor elk blokje)
     public void CalculateArrayRotatingLength(TetrisBlock block, Color color, int k)
     {
-        Console.WriteLine(color);
         for (int j = 0; j < k; j++)                //Controleert hier de onderste rij van het 4x4 grid
         {
             if (k == 1)
             {
                 block.ArrayRotatingLength = k;      //Beveiliging dat je niet een "grid" krijgt van 0, minimale lengte moet namelijk 1 zijn ivm errors
-                Console.WriteLine(k);
                 break;
             }
             if (block.BlockForm[k - 1, j] == color)     //Als hij op een plek bezet is
             {
                 block.ArrayRotatingLength = k;          //dan is de gridlengte dus k
-                Console.WriteLine(k);
                 break;                                  //en zijn we klaar met de methode
             }
             if (j == (k-1))                                 //Als de rij na het doorlopen nergens bezet was
@@ -370,7 +367,6 @@ class Options
                     if (block.BlockForm[i, k - 1] == color) //Als hij op een plek bezet is
                     {
                         block.ArrayRotatingLength = k;      //dan is de gridlengte dus k
-                        Console.WriteLine(k);
                         break;                              //en zijn we klaar met de methode
                     }
                     if (i == (k-2))                             //Als de kolom na het doorlopen nergens bezet was

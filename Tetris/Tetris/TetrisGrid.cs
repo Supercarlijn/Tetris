@@ -137,4 +137,9 @@ class TetrisGrid
             for (int j = 0; j < 12; j++)
                 s.Draw(gridblock, new Vector2(j * cellwidth, i * cellheight), occupied[i,j]);
     }
+
+    public Color[,] Occupied
+    {
+        get { return occupied; }
+    }
 }
