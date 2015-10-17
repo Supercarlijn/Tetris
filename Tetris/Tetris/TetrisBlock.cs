@@ -22,6 +22,11 @@ class TetrisBlock
         timesturn = 0;
         timelimit = TimeSpan.FromSeconds(1);
         levelspeed = 1;
+        blockForm = new Color[4, 4];
+        currentBlockForm = new Color[4, 4];
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
+                blockForm[i, j] = Color.White;
     }
 
     public void HandleInput(InputHelper inputHelper)
@@ -30,10 +35,6 @@ class TetrisBlock
         {
             RotateRight();
 
-            if(TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color) || TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color))
-            {
-                RotateLeft();
-            }
         }
         else if (inputHelper.KeyPressed(Keys.Down))                     //Beweegt naar beneden
         {
@@ -92,6 +93,20 @@ class TetrisBlock
                     blockFormPosition -= new Vector2(sprite.Width, 0);
                 else RotateLeft();
             }
+    }
+    
+    public void CleanRotateRight()
+    {
+
+        Color[,] result = new Color[ArrayRotatingLength, ArrayRotatingLength];
+        for (int i = 0; i < ArrayRotatingLength; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
+            for (int j = 0; j < ArrayRotatingLength; j++)
+            {
+                result[i, j] = blockForm[p - j - 1, i];
+            }
+        for (int i = 0; i < ArrayRotatingLength; i++)
+            for (int j = 0; j < ArrayRotatingLength; j++)
+                blockForm[i, j] = result[i, j];
     }
 
     public void RotateLeft()
@@ -171,6 +186,7 @@ class TetrisBlock
     public Color Color
     {
         get { return color; }
+        set { color = value; }
     }
 
     public int ArrayRotatingLength

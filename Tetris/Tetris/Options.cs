@@ -377,4 +377,38 @@ class Options
                 }
         }
     }
+
+    public bool IsBlockSymmetrical(TetrisBlock block, Color color)
+    {
+        int Xcounter = 0, Ycounter = 0;
+        TetrisBlock turned = new TetrisBlock("turned", this.block);
+        turned.ArrayRotatingLength = block.ArrayRotatingLength;
+        turned.BlockForm = new Color[turned.ArrayRotatingLength, turned.ArrayRotatingLength];
+        turned.Color = block.Color;
+        for (int i = 0; i < block.ArrayRotatingLength; i++)
+            for (int j = 0; j < block.ArrayRotatingLength; j++)
+                turned.BlockForm[i, j] = block.BlockForm[i, j];
+        turned.CleanRotateRight();
+        turned.CleanRotateRight();
+        for (int i = 0; i < turned.ArrayRotatingLength; i++)
+        {
+            for (int j = 0; j < turned.ArrayRotatingLength; j++)
+            {
+                if ((turned.BlockForm[i, j] == block.BlockForm[i, turned.ArrayRotatingLength - j - 1]))
+                    Xcounter += 1;
+                if ((turned.BlockForm[i, j] == block.BlockForm[turned.ArrayRotatingLength - i - 1, j]))
+                    Ycounter += 1;
+            }
+        }
+        if (Xcounter == (block.ArrayRotatingLength * block.ArrayRotatingLength) || Ycounter == (block.ArrayRotatingLength * block.ArrayRotatingLength))
+        {
+            Console.WriteLine(true);
+            return true;
+        }
+        else
+        {
+            Console.WriteLine(false);
+            return false; // NOT FULLY TESTED, SHOULD WORK
+        }
+    }
 }

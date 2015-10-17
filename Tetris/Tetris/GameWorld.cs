@@ -91,6 +91,13 @@ class GameWorld
                 options.CalculateArrayRotatingLength(block5, block5.Color, 4);
                 options.CalculateArrayRotatingLength(block6, block6.Color, 4);
                 options.CalculateArrayRotatingLength(block7, block7.Color, 4);
+                options.IsBlockSymmetrical(block1, block1.Color);
+                options.IsBlockSymmetrical(block2, block2.Color);
+                options.IsBlockSymmetrical(block3, block3.Color);
+                options.IsBlockSymmetrical(block4, block4.Color);
+                options.IsBlockSymmetrical(block5, block5.Color);
+                options.IsBlockSymmetrical(block6, block6.Color);
+                options.IsBlockSymmetrical(block7, block7.Color);
                 gameState = GameState.Playing;
             }
         }
