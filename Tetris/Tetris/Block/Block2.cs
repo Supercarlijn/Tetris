@@ -7,7 +7,6 @@ class Block2 : TetrisBlock
         : base("block2", sprite)
     {
         base.color = Color.Yellow;
-        base.p = 4;
         base.blockForm = new Color[4, 4];
         base.currentBlockForm = new Color[4, 4];
         for (int i = 0; i < 2; i++)         //Geeft aan welke delen bezet zijn en met welke kleur

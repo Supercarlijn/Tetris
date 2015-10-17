@@ -98,10 +98,10 @@ class Options
                     block2.CurrentBlockForm[m, 3] = Color.Black;
                     block2.CurrentBlockForm[m, 3].A = 0;
                 }
+                block2.CurrentBlockForm[0, 0] = Color.Yellow;
+                block2.CurrentBlockForm[0, 1] = Color.Yellow;
+                block2.CurrentBlockForm[1, 0] = Color.Yellow;
                 block2.CurrentBlockForm[1, 1] = Color.Yellow;
-                block2.CurrentBlockForm[1, 2] = Color.Yellow;
-                block2.CurrentBlockForm[2, 1] = Color.Yellow;
-                block2.CurrentBlockForm[2, 2] = Color.Yellow;
             }
 
             if (i.MousePosition.X > (screenWidth / 2 + (-2 * block.Width)) && (i.MousePosition.Y > block.Height) && i.MousePosition.X < (screenWidth / 2 + (2 * block.Width)) && (i.MousePosition.Y < 5 * block.Height))
@@ -174,10 +174,10 @@ class Options
                     block4.CurrentBlockForm[m, 3] = Color.Black;
                     block4.CurrentBlockForm[m, 3].A = 0;
                 }
-                block4.CurrentBlockForm[0, 2] = Color.Blue;
-                block4.CurrentBlockForm[1, 2] = Color.Blue;
+                block4.CurrentBlockForm[0, 1] = Color.Blue;
                 block4.CurrentBlockForm[1, 1] = Color.Blue;
-                block4.CurrentBlockForm[2, 1] = Color.Blue;
+                block4.CurrentBlockForm[1, 0] = Color.Blue;
+                block4.CurrentBlockForm[2, 0] = Color.Blue;
             }
 
             if (i.MousePosition.X > (screenWidth / 2 + (8 * block.Width)) && (i.MousePosition.Y > block.Height) && i.MousePosition.X < (screenWidth / 2 + (12 * block.Width)) && (i.MousePosition.Y < 5 * block.Height))
@@ -212,10 +212,10 @@ class Options
                     block5.CurrentBlockForm[m, 3] = Color.Black;
                     block5.CurrentBlockForm[m, 3].A = 0;
                 }
-                block5.CurrentBlockForm[0, 1] = Color.Purple;
+                block5.CurrentBlockForm[0, 0] = Color.Purple;
+                block5.CurrentBlockForm[1, 0] = Color.Purple;
                 block5.CurrentBlockForm[1, 1] = Color.Purple;
-                block5.CurrentBlockForm[1, 2] = Color.Purple;
-                block5.CurrentBlockForm[2, 2] = Color.Purple;
+                block5.CurrentBlockForm[2, 1] = Color.Purple;
             }
 
             if (i.MousePosition.X > (screenWidth / 2 + (-12 * block.Width)) && (i.MousePosition.Y > 7 * block.Height) && i.MousePosition.X < (screenWidth / 2 + (-8 * block.Width)) && (i.MousePosition.Y < 11 * block.Height))
@@ -361,6 +361,7 @@ class Options
                 block.ArrayRotatingLength = k;          //dan is de gridlengte dus k
                 break;                                  //en zijn we klaar met de methode
             }
+
             if (j == (k-1))                                 //Als de rij na het doorlopen nergens bezet was
                 for (int i = 0; i < k - 1; i++)         //Controleert hier de rechterste kolom van het 4x4 grid
                 {
