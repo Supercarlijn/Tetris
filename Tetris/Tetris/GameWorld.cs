@@ -13,7 +13,7 @@ class GameWorld
     }
     Random random;
     SpriteFont font;
-    Texture2D block, reset;
+    Texture2D block, reset, playButton;
     GameState gameState;
     TetrisGrid grid;
     Options options;
@@ -40,6 +40,7 @@ class GameWorld
         block = Content.Load<Texture2D>("block");
         reset = Content.Load<Texture2D>("reset");
         font = Content.Load<SpriteFont>("SpelFont");
+        playButton = Content.Load<Texture2D>("Play");
         grid = new TetrisGrid(block);
         i = (int)random.Next(7) + 1;
 
@@ -157,6 +158,7 @@ class GameWorld
             grid.Draw(gameTime, spriteBatch);
             blocks.Draw(gameTime, spriteBatch, i);
         }
+        spriteBatch.Draw(playButton, new Vector2(0, 0), null, Color.White, 0.0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
         spriteBatch.End();
     }
 
