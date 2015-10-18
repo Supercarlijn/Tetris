@@ -14,14 +14,15 @@ class Block2 : TetrisBlock
             for (int j = 0; j < 2; j++)
             {
                 base.blockForm[i, j] = base.color;
+                base.currentBlockForm[i, j] = base.color;
             }
         }
-        base.currentBlockForm = base.blockForm;
         base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van het blokje
     }
 
     public override void Reset()
     {
         blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);
+        base.blockForm = base.currentBlockForm;
     }
 }

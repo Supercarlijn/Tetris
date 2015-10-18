@@ -30,7 +30,6 @@ class GameWorld
     Block6 block6, block6res;               //Letter L
     Block7 block7, block7res;               //Omgekeerde letter L
     BlockList blocks;                       //De lijst die de blokjes bevat
-    BlockList reserve;                      //Tweede instantie van blocklist voor het tekenen van het volgende blokje naast speelveld
 
 
     public GameWorld(int width, int height, ContentManager Content)
@@ -68,21 +67,21 @@ class GameWorld
         block7 = new Block7(block);
         blocks.Add(block7, 7);
 
-        reserve = new BlockList(block);         //Voegen de verschillende blockobjecten toe aan een tweede lijst voor het tekenen van het volgende blokje
+        //Voegen de verschillende blockobjecten toe aan een tweede lijst voor het tekenen van het volgende blokje
         block1res = new Block1(block);
-        reserve.Add(block1res, 1);
+        blocks.AddToReserve(block1res, 1);
         block2res = new Block2(block);
-        reserve.Add(block2res, 2);
+        blocks.AddToReserve(block2res, 2);
         block3res = new Block3(block);
-        reserve.Add(block3res, 3);
+        blocks.AddToReserve(block3res, 3);
         block4res = new Block4(block);
-        reserve.Add(block4res, 4);
+        blocks.AddToReserve(block4res, 4);
         block5res = new Block5(block);
-        reserve.Add(block5res, 5);
+        blocks.AddToReserve(block5res, 5);
         block6res = new Block6(block);
-        reserve.Add(block6res, 6);
+        blocks.AddToReserve(block6res, 6);
         block7res = new Block7(block);
-        reserve.Add(block7res, 7);
+        blocks.AddToReserve(block7res, 7);
 
         options = new Options(block, reset, width, height, font, blocks);
     }
@@ -93,11 +92,6 @@ class GameWorld
 
     public void HandleInput(GameTime gameTime, InputHelper inputHelper)
     {
-        if (gameState == GameState.Playing)                 //Speelfase
-        {
-            blocks.HandleInput(inputHelper, i);             //Het bewegen van de blokjes over het speelveld
-        }
-
         if (gameState == GameState.Options)                 //Optie menu
         {
             options.HandleInput(inputHelper);
@@ -111,7 +105,7 @@ class GameWorld
                 block6.BlockForm = block6.CurrentBlockForm;
                 block7.BlockForm = block7.CurrentBlockForm;
 
-                block1res.BlockForm = block1.CurrentBlockForm; 
+                block1res.BlockForm = block1.CurrentBlockForm;
                 block2res.BlockForm = block2.CurrentBlockForm;
                 block3res.BlockForm = block3.CurrentBlockForm;
                 block4res.BlockForm = block4.CurrentBlockForm;
@@ -129,6 +123,10 @@ class GameWorld
 
                 gameState = GameState.Playing;
             }
+        }
+        else if (gameState == GameState.Playing)                 //Speelfase
+        {
+            blocks.HandleInput(inputHelper, i);             //Het bewegen van de blokjes over het speelveld
         }
     }
 
@@ -159,7 +157,7 @@ class GameWorld
                 block5.newBlock = false;
                 block6.newBlock = false;
                 block7.newBlock = false;
-                blocks.Reset(i);
+                blocks.Reset(i, i2);
                 i = (int)random.Next(7) + 1;
                 i = i2;
                 i2 = (int)random.Next(7) + 1;
@@ -169,7 +167,7 @@ class GameWorld
                     blockcounter = 1;
                     level++;
                     levelspeed += 0.35f;
-                
+                }
             }
             for (int x = 0; x < grid.Width; x++)
                 if (grid.Occupied[0, x] != Color.White)
@@ -181,10 +179,8 @@ class GameWorld
                     }
                     gameState = GameState.GameOver;
                 }
-                
-                }
-            }    
-        }     
+        }    
+    }     
     
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
@@ -195,8 +191,7 @@ class GameWorld
         if (gameState == GameState.Playing)
         {
             grid.Draw(gameTime, spriteBatch);
-            blocks.Draw(gameTime, spriteBatch, i, Vector2.Zero);
-            reserve.Draw(gameTime, spriteBatch, i2, new Vector2(9.5f * TetrisGrid.cellwidth, 4 * TetrisGrid.cellheight));
+            blocks.Draw(gameTime, spriteBatch, i, i2, new Vector2(9.5f * TetrisGrid.cellwidth, 4 * TetrisGrid.cellheight));
             spriteBatch.DrawString(font, "Level: " + level, new Vector2(13 * TetrisGrid.cellwidth, 0.5f * TetrisGrid.cellheight), Color.Black);
             spriteBatch.DrawString(font, "Score: " + score, new Vector2(13 * TetrisGrid.cellwidth, 1.5f * TetrisGrid.cellheight), Color.Black);
             spriteBatch.DrawString(font, "Next block:", new Vector2(13 * TetrisGrid.cellwidth, 2.5f * TetrisGrid.cellheight), Color.Black);

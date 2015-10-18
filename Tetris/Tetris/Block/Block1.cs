@@ -13,13 +13,14 @@ class Block1 : TetrisBlock
         for (int i = 0; i < 4; i++)                         //Geeft aan welke delen bezet zijn en met welke kleur
         {
                 base.blockForm[i, 1] = base.color;
+                base.currentBlockForm[i, 1] = base.color;
         }
-        base.currentBlockForm = base.blockForm;
         base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van het blokje
     }
 
     public override void Reset()
     {
         blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);
+        base.blockForm = base.currentBlockForm;
     }
 }
