@@ -80,6 +80,7 @@
     <Compile Include="Block\Block5.cs" />
     <Compile Include="Block\Block6.cs" />
     <Compile Include="Block\Block7.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="GameWorld.cs" />
     <Compile Include="InputHelper.cs" />

@@ -13,10 +13,11 @@ class GameWorld
     }
     Random random;
     SpriteFont font;
-    Texture2D block, reset, playButton;
+    Texture2D block, reset, playButton, optionsButton, polytris;
     GameState gameState;
     TetrisGrid grid;
     Options options;
+    Menu menu;
     public int screenWidth, screenHeight;
     int i, i2, blockcounter;            //i, i2 worden gebruikt om een random blokje te laten verschijnen, blockcounter om te tellen hoeveel blokjes al geplaatst zijn
     static int level, score;
@@ -38,12 +39,14 @@ class GameWorld
         screenWidth = width;
         screenHeight = height;
         random = new Random();
-        gameState = GameState.Options;
+        gameState = GameState.Menu;
         inputHelper = new InputHelper();
         block = Content.Load<Texture2D>("block");
         reset = Content.Load<Texture2D>("reset");
         font = Content.Load<SpriteFont>("SpelFont");
         playButton = Content.Load<Texture2D>("Play");
+        optionsButton = Content.Load<Texture2D>("Options");
+        polytris = Content.Load<Texture2D>("Polytris");
         grid = new TetrisGrid(block);
         level = 1;
         levelspeed = 1;
@@ -85,6 +88,8 @@ class GameWorld
         reserve.Add(block7res, 7);
 
         options = new Options(block, reset, width, height, font, blocks);
+        menu = new Menu(playButton, optionsButton, polytris, width, height);
+        
     }
 
     public void Reset()
@@ -96,6 +101,22 @@ class GameWorld
         if (gameState == GameState.Playing)                 //Speelfase
         {
             blocks.HandleInput(inputHelper, i);             //Het bewegen van de blokjes over het speelveld
+        }
+
+        if (gameState == GameState.Menu)
+        {
+            if (inputHelper.MouseLeftButtonPressed())
+            {
+                if (menu.PlayRect.Contains((int)inputHelper.MousePosition.X, (int)inputHelper.MousePosition.Y))
+                {
+                    gameState = GameState.Playing;
+                }
+                
+                if (menu.OptionsRect.Contains((int)inputHelper.MousePosition.X, (int)inputHelper.MousePosition.Y))
+                {
+                    gameState = GameState.Options;
+                }
+            }
         }
 
         if (gameState == GameState.Options)                 //Optie menu
@@ -143,7 +164,7 @@ class GameWorld
             options.Update();
         if (gameState == GameState.GameOver)
         {
-            gameState = GameState.Options; // TIJDELIJK
+            gameState = GameState.Menu; //Tijdelijk
         }
         if (gameState == GameState.Playing)
         { 
@@ -189,6 +210,8 @@ class GameWorld
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         spriteBatch.Begin();
+        if (gameState == GameState.Menu)
+            menu.Draw(gameTime, spriteBatch);
         if (gameState == GameState.Options)
             options.Draw(gameTime, spriteBatch);
 
