@@ -103,6 +103,8 @@ class GameWorld
         if (gameState == GameState.Playing)                 //Speelfase
         {
             blocks.HandleInput(inputHelper, i);             //Het bewegen van de blokjes over het speelveld
+            if (inputHelper.KeyPressed(Keys.Escape))
+                gameState = GameState.GameOver;
         }
 
         if (gameState == GameState.Menu)
