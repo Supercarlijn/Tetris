@@ -5,16 +5,18 @@ using System;
 
 class Options
 {
-    Texture2D block, reset;
+    Texture2D block, reset, back;
     int screenWidth, screenHeight;
     BlockList blocks;
     TetrisBlock block1, block2, block3, block4, block5, block6, block7;
     SpriteFont font;
+    Rectangle backRect;
 
-    public Options(Texture2D blockSprite, Texture2D resetSprite, int screenWidth, int screenHeight, SpriteFont spriteFont, BlockList blocks)
+    public Options(Texture2D blockSprite, Texture2D resetSprite, Texture2D backSprite, int screenWidth, int screenHeight, SpriteFont spriteFont, BlockList blocks)
     {
         block = blockSprite;
         reset = resetSprite;
+        back = backSprite;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.blocks = blocks;
@@ -25,7 +27,8 @@ class Options
         block5 = blocks.Find(5);
         block6 = blocks.Find(6);
         block7 = blocks.Find(7);
-        font = spriteFont;   
+        font = spriteFont;
+        backRect = new Rectangle(screenWidth / 2 - backSprite.Width / 2, screenHeight - backSprite.Height - 100, backSprite.Width, backSprite.Height);
     }
 
     public void HandleInput(InputHelper i)
@@ -344,5 +347,12 @@ class Options
 
             spriteBatch.DrawString(font, "Note when making custom blocks:", new Vector2(0f, screenHeight - 48), Color.Black);
             spriteBatch.DrawString(font, "The rotating point will always be at the center of the smallest square grid from the top left", new Vector2(0f, screenHeight - 24), Color.Black);
+
+            spriteBatch.Draw(back, backRect, Color.White);
+    }
+
+    public Rectangle BackRect
+    {
+        get { return backRect; }
     }
 }

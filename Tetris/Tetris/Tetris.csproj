@@ -80,6 +80,8 @@
     <Compile Include="Block\Block5.cs" />
     <Compile Include="Block\Block6.cs" />
     <Compile Include="Block\Block7.cs" />
+    <Compile Include="GameOver.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="GameWorld.cs" />
     <Compile Include="InputHelper.cs" />
@@ -93,12 +95,6 @@
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TetrisContent\TetrisContent.contentproj">
-      <Name>TetrisContent</Name>
-      <XnaReferenceType>Content</XnaReferenceType>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
@@ -121,6 +117,13 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Content\Content.contentproj">
+      <Project>{C55112F9-D21A-420B-AEC8-FBEAEB54C0F3}</Project>
+      <Name>Content</Name>
+      <XnaReferenceType>Content</XnaReferenceType>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

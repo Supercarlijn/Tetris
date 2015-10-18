@@ -15,7 +15,6 @@ class Block4 : TetrisBlock
         base.blockForm[1, 1] = base.color;
         base.blockForm[2, 0] = base.color;
         base.currentBlockForm = base.blockForm;
-        base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van het blokje
     }
 
     public override void Reset()

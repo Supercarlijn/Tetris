@@ -14,7 +14,7 @@ class TetrisBlock
     protected Color color;
     TimeSpan timelimit;                                     //De tijdlimiet van hoe lang een blokje stil mag blijven staan
     Texture2D sprite;
-    SoundEffect blockplaced, fullrow;
+    SoundEffect fullrow;
 
     public TetrisBlock(Texture2D sprite, ContentManager Content)
     {
@@ -26,6 +26,7 @@ class TetrisBlock
                 blockForm[i, j] = Color.White;
         timelimit = TimeSpan.FromSeconds(0.9);
         fullrow = Content.Load<SoundEffect>("FullRow");
+        blockFormPosition = new Vector2(5 * TetrisGrid.cellwidth, 0);   //Startpositie van het blokje
     }
 
     //Deze methode moet aangeroepen worden voor elk blokje bij het sluiten van options, int k is daar dan 4 (voor elk blokje)
@@ -108,23 +109,25 @@ class TetrisBlock
     //Roteert het blokje rechtsom
     public void RotateRight()
     {
-
-            Color[,] result = new Color[p, p];
-            for (int i = 0; i < p; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
-                for (int j = 0; j < p; j++)
-                {
-                    result[i, j] = blockForm[p - j - 1, i];
-                }
-            for (int i = 0; i < p; i++)
-                for (int j = 0; j < p; j++)
-                    blockForm[i, j] = result[i, j];
-            if ((TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color) || TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color)))
+         Color[,] result = new Color[p, p];
+         for (int i = 0; i < p; i++)                                 //Maakt van de kolommen rijen en vice versa en draait de inhoud van de rijen om
+            for (int j = 0; j < p; j++)
             {
-                if (!(TetrisGrid.IsOutOfField(blockFormPosition + new Vector2(sprite.Width, 0), blockForm, color) || TetrisGrid.CheckPlayField(blockFormPosition + new Vector2(sprite.Width, 0), blockForm, color)))
-                    blockFormPosition += new Vector2(sprite.Width, 0);
-                else if (!(TetrisGrid.IsOutOfField(blockFormPosition - new Vector2(sprite.Width, 0), blockForm, color) || TetrisGrid.CheckPlayField(blockFormPosition - new Vector2(sprite.Width, 0), blockForm, color)))
-                    blockFormPosition -= new Vector2(sprite.Width, 0);
-                else RotateLeft();
+                result[i, j] = blockForm[p - j - 1, i];
+            }
+        for (int i = 0; i < p; i++)
+            for (int j = 0; j < p; j++)
+            {
+                blockForm[i, j] = result[i, j];
+            }
+        if ((TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color) || TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color)))
+        {
+            if (!(TetrisGrid.IsOutOfField(blockFormPosition + new Vector2(sprite.Width, 0), blockForm, color) || TetrisGrid.CheckPlayField(blockFormPosition + new Vector2(sprite.Width, 0), blockForm, color)))
+                 blockFormPosition += new Vector2(sprite.Width, 0);
+            else if (!(TetrisGrid.IsOutOfField(blockFormPosition - new Vector2(sprite.Width, 0), blockForm, color) || TetrisGrid.CheckPlayField(blockFormPosition - new Vector2(sprite.Width, 0), blockForm, color)))
+                blockFormPosition -= new Vector2(sprite.Width, 0);
+            else
+                RotateLeft();
             }
     }
 

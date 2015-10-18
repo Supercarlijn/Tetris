@@ -12,11 +12,13 @@ class GameWorld
         Playing, GameOver, Options, Menu
     }
     Random random;
-    SpriteFont font;
-    Texture2D block, reset, playButton;
+    SpriteFont font, font2, font3;
+    Texture2D block, reset, playButton, optionsButton, polytris, backButton;
     GameState gameState;
     TetrisGrid grid;
     Options options;
+    Menu menu;
+    GameOver gameOver;
     public int screenWidth, screenHeight;
     int i, i2, blockcounter;            //i, i2 worden gebruikt om een random blokje te laten verschijnen, blockcounter om te tellen hoeveel blokjes al geplaatst zijn
     static int level, score;
@@ -37,12 +39,17 @@ class GameWorld
         screenWidth = width;
         screenHeight = height;
         random = new Random();
-        gameState = GameState.Options;
+        gameState = GameState.Menu;
         inputHelper = new InputHelper();
         block = Content.Load<Texture2D>("block");
         reset = Content.Load<Texture2D>("reset");
         font = Content.Load<SpriteFont>("SpelFont");
+        font2 = Content.Load<SpriteFont>("SpriteFont1");
+        font3 = Content.Load<SpriteFont>("SpriteFont2");
         playButton = Content.Load<Texture2D>("Play");
+        optionsButton = Content.Load<Texture2D>("Options");
+        backButton = Content.Load<Texture2D>("Back");
+        polytris = Content.Load<Texture2D>("Polytris");
         grid = new TetrisGrid(block);
         level = 1;
         levelspeed = 1;
@@ -83,7 +90,10 @@ class GameWorld
         block7res = new Block7(block, Content);
         blocks.AddToReserve(block7res, 7);
 
-        options = new Options(block, reset, width, height, font, blocks);
+        options = new Options(block, reset, backButton, width, height, font, blocks);
+        menu = new Menu(playButton, optionsButton, polytris, width, height);
+        gameOver = new GameOver(backButton, width, height);
+        
     }
 
     public void Reset()
@@ -92,10 +102,54 @@ class GameWorld
 
     public void HandleInput(GameTime gameTime, InputHelper inputHelper)
     {
+        if (gameState == GameState.Playing)                 //Speelfase
+        {
+            blocks.HandleInput(inputHelper, i);             //Het bewegen van de blokjes over het speelveld
+            if (inputHelper.KeyPressed(Keys.Escape))
+                gameState = GameState.GameOver;
+        }
+
+        if (gameState == GameState.Menu)
+        {
+            if (inputHelper.MouseLeftButtonPressed())
+            {
+                if (menu.PlayRect.Contains((int)inputHelper.MousePosition.X, (int)inputHelper.MousePosition.Y))
+                {
+                    gameState = GameState.Playing;
+                }
+                
+                if (menu.OptionsRect.Contains((int)inputHelper.MousePosition.X, (int)inputHelper.MousePosition.Y))
+                {
+                    gameState = GameState.Options;
+                }
+            }
+
+            block1.CalculateArrayRotatingLength(4);            //Hier wordt berekend hoe de blokjes moeten draaien afhankelijk van hun vorm
+            block2.CalculateArrayRotatingLength(4);
+            block3.CalculateArrayRotatingLength(4);
+            block4.CalculateArrayRotatingLength(4);
+            block5.CalculateArrayRotatingLength(4);
+            block6.CalculateArrayRotatingLength(4);
+            block7.CalculateArrayRotatingLength(4);
+        }
+
+        if (gameState == GameState.GameOver)
+        {
+            if (inputHelper.MouseLeftButtonPressed())
+            {
+                if (gameOver.BackRect.Contains((int)inputHelper.MousePosition.X, (int)inputHelper.MousePosition.Y))
+                {
+                    score = 0;
+                    level = 1;
+                    levelspeed = 1;
+                    gameState = GameState.Menu;
+                }
+            }
+        }
         if (gameState == GameState.Options)                 //Optie menu
         {
             options.HandleInput(inputHelper);
-            if (inputHelper.KeyPressed(Keys.K))             //Het beginnen van het spel
+            if (inputHelper.MouseLeftButtonPressed() && options.BackRect.Contains((int)inputHelper.MousePosition.X, (int)inputHelper.MousePosition.Y))             //Het beginnen van het spel
             {
                 block1.BlockForm = block1.CurrentBlockForm;         //De bewerkte vormen moeten doorgegeven worden aan de speelfase
                 block2.BlockForm = block2.CurrentBlockForm;
@@ -113,36 +167,16 @@ class GameWorld
                 block6res.BlockForm = block6.CurrentBlockForm;
                 block7res.BlockForm = block7.CurrentBlockForm;
 
-                block1.CalculateArrayRotatingLength(4);            //Hier wordt berekend hoe de blokjes moeten draaien afhankelijk van hun vorm
-                block2.CalculateArrayRotatingLength(4);
-                block3.CalculateArrayRotatingLength(4);
-                block4.CalculateArrayRotatingLength(4);
-                block5.CalculateArrayRotatingLength(4);
-                block6.CalculateArrayRotatingLength(4);
-                block7.CalculateArrayRotatingLength(4);
-
-                gameState = GameState.Playing;
+                gameState = GameState.Menu;
             }
-        }
-        else if (gameState == GameState.Playing)                 //Speelfase
-        {
-            blocks.HandleInput(inputHelper, i);             //Het bewegen van de blokjes over het speelveld
         }
     }
 
     public void Update(GameTime gameTime)
     {
         inputHelper.Update(gameTime);
-        if (gameState == GameState.Menu)
-        {
-            //MOUSE LOCATIONS TO BE DETERMINED
-        }
         if (gameState == GameState.Options)
             options.Update();
-        if (gameState == GameState.GameOver)
-        {
-            gameState = GameState.Options; // TIJDELIJK
-        }
         if (gameState == GameState.Playing)
         { 
             blocks.Update(gameTime, i);
@@ -185,6 +219,8 @@ class GameWorld
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         spriteBatch.Begin();
+        if (gameState == GameState.Menu)
+            menu.Draw(gameTime, spriteBatch);
         if (gameState == GameState.Options)
             options.Draw(gameTime, spriteBatch);
 
@@ -195,6 +231,15 @@ class GameWorld
             spriteBatch.DrawString(font, "Level: " + level, new Vector2(13 * TetrisGrid.cellwidth, 0.5f * TetrisGrid.cellheight), Color.Black);
             spriteBatch.DrawString(font, "Score: " + score, new Vector2(13 * TetrisGrid.cellwidth, 1.5f * TetrisGrid.cellheight), Color.Black);
             spriteBatch.DrawString(font, "Next block:", new Vector2(13 * TetrisGrid.cellwidth, 2.5f * TetrisGrid.cellheight), Color.Black);
+        }
+
+        if (gameState == GameState.GameOver)
+        {
+            string s = "GAME OVER";
+            string text = "Score: " + score;
+            spriteBatch.Draw(backButton, gameOver.BackRect, Color.White);
+            spriteBatch.DrawString(font2, s, new Vector2((screenWidth - font2.MeasureString(s).X) / 2, 100), Color.Red);
+            spriteBatch.DrawString(font3, text, new Vector2((screenWidth - font3.MeasureString(text).X) / 2, 425), Color.Black);
         }
         spriteBatch.End();
     }

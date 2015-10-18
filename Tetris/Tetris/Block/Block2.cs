@@ -18,7 +18,6 @@ class Block2 : TetrisBlock
             }
         }
         base.currentBlockForm = base.blockForm;
-        base.blockFormPosition = new Vector2(4 * TetrisGrid.cellwidth, 0);   //Startpositie van het blokje
     }
 
     public override void Reset()
