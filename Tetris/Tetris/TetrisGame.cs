@@ -6,7 +6,6 @@ class TetrisGame : Game
     SpriteBatch spriteBatch;
     InputHelper inputHelper;
     GameWorld gameWorld;
-    public Vector2 screen;
 
     static void Main(string[] args)
     {

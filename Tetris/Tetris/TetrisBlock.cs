@@ -5,23 +5,51 @@ using Microsoft.Xna.Framework.Input;
 
 class TetrisBlock
 {
-    protected Color[,] blockForm, currentBlockForm;                       //Houdt bij wat de vorm is van een blok
-    protected Vector2 blockFormPosition;
-    protected int timesturn, p; //p = de lengte van het "grid" dat gedraaid moet worden
-    public bool newBlock;
+    protected Color[,] blockForm, currentBlockForm;         //Houdt bij wat de vorm is van een blok
+    protected Vector2 blockFormPosition;                    //De positie van het blokje in het speelveld
+    protected int p;                                        //p = de lengte van het "grid" dat gedraaid moet worden
+    public bool newBlock;                                   //Geeft aan of er een nieuw blokje geplaatst moet worden bovenaan het scherm
     protected Color color;
-    TimeSpan timelimit;
-    double levelspeed;
-    string block;
+    TimeSpan timelimit;                                     //De tijdlimiet van hoe lang een blokje stil mag blijven staan
     Texture2D sprite;
 
-    public TetrisBlock(string block, Texture2D sprite)
+    public TetrisBlock(Texture2D sprite)
     {
-        this.block = block;
         this.sprite = sprite;
-        timesturn = 0;
-        timelimit = TimeSpan.FromSeconds(1);
-        levelspeed = 1;
+        timelimit = TimeSpan.FromSeconds(0.9);
+    }
+
+    //Deze methode moet aangeroepen worden voor elk blokje bij het sluiten van options, int k is daar dan 4 (voor elk blokje)
+    //Het berekent hoe het blokje gedraaid moet worden afhankelijk van de grootte van het blokje
+    //De uitkomst van deze methode wordt gebruikt in de methodes RotateRight en RotateLeft
+    public void CalculateArrayRotatingLength(int k)
+    {
+        for (int j = 0; j < k; j++)                //Controleert hier de onderste rij van het 4x4 grid
+        {
+            if (k == 1)
+            {
+                p = k;      //Beveiliging dat je niet een "grid" krijgt van 0, minimale lengte moet namelijk 1 zijn ivm errors
+                break;
+            }
+            if (blockForm[k - 1, j] == color)     //Als hij op een plek bezet is
+            {
+                p = k;                            //dan is de gridlengte dus k
+                break;                            //en zijn we klaar met de methode
+            }
+            if (j == k - 1)                         //Als de rij na het doorlopen nergens bezet was
+                for (int i = 0; i < k; i++)         //Controleert hier de rechterste kolom van het 4x4 grid
+                {
+                    if (blockForm[i, k - 1] == color) //Als hij op een plek bezet is
+                    {
+                        p = k;                        //dan is de gridlengte dus k
+                        break;                        //en zijn we klaar met de methode
+                    }
+                    if (i == k - 1)                   //Als de kolom na het doorlopen nergens bezet was
+                    {
+                        CalculateArrayRotatingLength(k - 1);  //Moet hij hetzelfde controleren, maar dan voor een 3x3 grid ipv 4x4, totdat hij op een plek komt waar er een blokje bezet is (dus gaat eventueel door tot k = 1)
+                    }
+                }
+        }
     }
 
     public void HandleInput(InputHelper inputHelper)
@@ -39,6 +67,7 @@ class TetrisBlock
         {
             blockFormPosition += new Vector2(0, 1 * TetrisGrid.cellheight);
             timelimit = TimeSpan.FromSeconds(1);
+            //Controleert of een blokje geplaatst moet worden
             if (TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color) || (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color)))
             {
                 blockFormPosition -= new Vector2(0, 1 * TetrisGrid.cellheight);
@@ -72,6 +101,7 @@ class TetrisBlock
         }
     }
 
+    //Roteert het blokje rechtsom
     public void RotateRight()
     {
         Color[,] result = new Color[p, p];
@@ -85,6 +115,7 @@ class TetrisBlock
                 blockForm[i, j] = result[i, j];
     }
 
+    //Roteert het blokje linksom
     public void RotateLeft()
     {
         Color[,] result = new Color[p, p];
@@ -98,6 +129,7 @@ class TetrisBlock
                 blockForm[i, j] = result[i, j];
     }
 
+    //Controleert of er rijen vol zijn en verwijderd moeten worden, en beweegt daarna de rijen eentje naar beneden
     public void CheckRows()
     {
         for (int i = 0; i < 20; i++)
@@ -105,17 +137,20 @@ class TetrisBlock
             {
                 TetrisGrid.ClearRow(i);
                 TetrisGrid.MoveRows(i);
+                GameWorld.Score += 10;
             }
     }
 
     public void Update(GameTime gameTime)
     {
-        double totalSeconds = gameTime.ElapsedGameTime.TotalSeconds * levelspeed;
+        //Hier wordt gekeken of een blokje te lang stilgestaan heeft en beweegt dan het blokje een rij naar beneden
+        double totalSeconds = gameTime.ElapsedGameTime.TotalSeconds * GameWorld.LevelSpeed;
         timelimit -= TimeSpan.FromSeconds(totalSeconds);
         if(timelimit.TotalSeconds <= 0)
         {
             blockFormPosition += new Vector2(0, 1 * TetrisGrid.cellheight);
-            timelimit = TimeSpan.FromSeconds(1);
+            timelimit = TimeSpan.FromSeconds(0.9);
+            //Controleert of het blokje geplaatst moet worden
             if (TetrisGrid.IsOutOfField(blockFormPosition, blockForm, color) || (TetrisGrid.CheckPlayField(blockFormPosition, blockForm, color)))
             {
                 blockFormPosition -= new Vector2(0, 1 * TetrisGrid.cellheight);
@@ -126,23 +161,18 @@ class TetrisBlock
         CheckRows();
     }
 
-    public void Draw(GameTime gameTime, SpriteBatch s)
+    public void Draw(GameTime gameTime, SpriteBatch s, Vector2 blockFoPos)
     {
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 4; j++)
             {
-                s.Draw(sprite, new Vector2(j * TetrisGrid.cellwidth, i * TetrisGrid.cellheight) + blockFormPosition, blockForm[i, j]);
+                s.Draw(sprite, new Vector2(j * TetrisGrid.cellwidth, i * TetrisGrid.cellheight) + blockFormPosition + blockFoPos, blockForm[i, j]);
                 //blabla + blockFormPosition; blabla is de afstand van de blokken IN blockFormTexture
             }
     }
 
     public virtual void Reset()
     {
-    }
-
-    public string Block
-    {
-        get { return block; }
     }
 
     public Color[,] BlockForm
@@ -160,11 +190,5 @@ class TetrisBlock
     public Color Color
     {
         get { return color; }
-    }
-
-    public int ArrayRotatingLength
-    {
-        get { return p; }
-        set { p = value; }
     }
 }
