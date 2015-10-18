@@ -5,16 +5,23 @@ using Microsoft.Xna.Framework.Graphics;
 class BlockList : TetrisBlock
 {
     public Dictionary<int, TetrisBlock> blocks;
+    public Dictionary<int, TetrisBlock> reserve; //Tweede dictionary voor het tekenen van het volgende blokje naast speelveld
 
     public BlockList(Texture2D sprite) :base(sprite)
     {
         blocks = new Dictionary<int, TetrisBlock>();
+        reserve = new Dictionary<int, TetrisBlock>();
     }
 
     //Deze methode voegt objecten toe aan onze Dictionary
     public void Add(TetrisBlock block, int id)
     {
         blocks.Add(id, block);
+    }
+
+    public void AddToReserve(TetrisBlock block, int id)
+    {
+        reserve.Add(id, block);
     }
 
     //Deze methode zoekt naar een object met een gegeven id
@@ -41,14 +48,16 @@ class BlockList : TetrisBlock
         blocks[i].Update(gameTime);
     }
 
-    public void Draw(GameTime gameTime, SpriteBatch spriteBatch, int i, Vector2 blockFoPos)
+    public void Draw(GameTime gameTime, SpriteBatch spriteBatch, int i, int i2, Vector2 blockFoPos)
     {
-        blocks[i].Draw(gameTime, spriteBatch, blockFoPos);
+        blocks[i].Draw(gameTime, spriteBatch, Vector2.Zero);
+        reserve[i2].Draw(gameTime, spriteBatch, blockFoPos);
     }
 
-    public void Reset(int i)
+    public void Reset(int i, int i2)
     {
         blocks[i].Reset();
+        reserve[i2].Reset();
     }
 
     public Dictionary<int,TetrisBlock> Blocks

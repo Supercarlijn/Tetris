@@ -13,11 +13,12 @@ class GameWorld
     }
     Random random;
     SpriteFont font;
-    Texture2D block, reset, playButton, optionsButton, polytris;
+    Texture2D block, reset, playButton, optionsButton, polytris, backButton;
     GameState gameState;
     TetrisGrid grid;
     Options options;
     Menu menu;
+    GameOver gameOver;
     public int screenWidth, screenHeight;
     int i, i2, blockcounter;            //i, i2 worden gebruikt om een random blokje te laten verschijnen, blockcounter om te tellen hoeveel blokjes al geplaatst zijn
     static int level, score;
@@ -31,7 +32,6 @@ class GameWorld
     Block6 block6, block6res;               //Letter L
     Block7 block7, block7res;               //Omgekeerde letter L
     BlockList blocks;                       //De lijst die de blokjes bevat
-    BlockList reserve;                      //Tweede instantie van blocklist voor het tekenen van het volgende blokje naast speelveld
 
 
     public GameWorld(int width, int height, ContentManager Content)
@@ -46,6 +46,7 @@ class GameWorld
         font = Content.Load<SpriteFont>("SpelFont");
         playButton = Content.Load<Texture2D>("Play");
         optionsButton = Content.Load<Texture2D>("Options");
+        backButton = Content.Load<Texture2D>("Back");
         polytris = Content.Load<Texture2D>("Polytris");
         grid = new TetrisGrid(block);
         level = 1;
@@ -71,24 +72,25 @@ class GameWorld
         block7 = new Block7(block);
         blocks.Add(block7, 7);
 
-        reserve = new BlockList(block);         //Voegen de verschillende blockobjecten toe aan een tweede lijst voor het tekenen van het volgende blokje
+        //Voegen de verschillende blockobjecten toe aan een tweede lijst voor het tekenen van het volgende blokje
         block1res = new Block1(block);
-        reserve.Add(block1res, 1);
+        blocks.AddToReserve(block1res, 1);
         block2res = new Block2(block);
-        reserve.Add(block2res, 2);
+        blocks.AddToReserve(block2res, 2);
         block3res = new Block3(block);
-        reserve.Add(block3res, 3);
+        blocks.AddToReserve(block3res, 3);
         block4res = new Block4(block);
-        reserve.Add(block4res, 4);
+        blocks.AddToReserve(block4res, 4);
         block5res = new Block5(block);
-        reserve.Add(block5res, 5);
+        blocks.AddToReserve(block5res, 5);
         block6res = new Block6(block);
-        reserve.Add(block6res, 6);
+        blocks.AddToReserve(block6res, 6);
         block7res = new Block7(block);
-        reserve.Add(block7res, 7);
+        blocks.AddToReserve(block7res, 7);
 
-        options = new Options(block, reset, width, height, font, blocks);
+        options = new Options(block, reset, backButton, width, height, font, blocks);
         menu = new Menu(playButton, optionsButton, polytris, width, height);
+        gameOver = new GameOver(backButton, width, height);
         
     }
 
@@ -119,10 +121,18 @@ class GameWorld
             }
         }
 
+        if (gameState == GameState.GameOver)
+        {
+            if (inputHelper.MouseLeftButtonPressed())
+            {
+                if (gameOver.BackRect.Contains((int)inputHelper.MousePosition.X, (int)inputHelper.MousePosition.Y))
+                    gameState = GameState.Menu;
+            }
+        }
         if (gameState == GameState.Options)                 //Optie menu
         {
             options.HandleInput(inputHelper);
-            if (inputHelper.KeyPressed(Keys.K))             //Het beginnen van het spel
+            if (inputHelper.MouseLeftButtonPressed() && options.BackRect.Contains((int)inputHelper.MousePosition.X, (int)inputHelper.MousePosition.Y))             //Het beginnen van het spel
             {
                 block1.BlockForm = block1.CurrentBlockForm;         //De bewerkte vormen moeten doorgegeven worden aan de speelfase
                 block2.BlockForm = block2.CurrentBlockForm;
@@ -132,7 +142,7 @@ class GameWorld
                 block6.BlockForm = block6.CurrentBlockForm;
                 block7.BlockForm = block7.CurrentBlockForm;
 
-                block1res.BlockForm = block1.CurrentBlockForm; 
+                block1res.BlockForm = block1.CurrentBlockForm;
                 block2res.BlockForm = block2.CurrentBlockForm;
                 block3res.BlockForm = block3.CurrentBlockForm;
                 block4res.BlockForm = block4.CurrentBlockForm;
@@ -148,7 +158,7 @@ class GameWorld
                 block6.CalculateArrayRotatingLength(4);
                 block7.CalculateArrayRotatingLength(4);
 
-                gameState = GameState.Playing;
+                gameState = GameState.Menu;
             }
         }
     }
@@ -156,16 +166,8 @@ class GameWorld
     public void Update(GameTime gameTime)
     {
         inputHelper.Update(gameTime);
-        if (gameState == GameState.Menu)
-        {
-            //MOUSE LOCATIONS TO BE DETERMINED
-        }
         if (gameState == GameState.Options)
             options.Update();
-        if (gameState == GameState.GameOver)
-        {
-            gameState = GameState.Menu; //Tijdelijk
-        }
         if (gameState == GameState.Playing)
         { 
             blocks.Update(gameTime, i);
@@ -180,7 +182,7 @@ class GameWorld
                 block5.newBlock = false;
                 block6.newBlock = false;
                 block7.newBlock = false;
-                blocks.Reset(i);
+                blocks.Reset(i, i2);
                 i = (int)random.Next(7) + 1;
                 i = i2;
                 i2 = (int)random.Next(7) + 1;
@@ -190,7 +192,7 @@ class GameWorld
                     blockcounter = 1;
                     level++;
                     levelspeed += 0.35f;
-                
+                }
             }
             for (int x = 0; x < grid.Width; x++)
                 if (grid.Occupied[0, x] != Color.White)
@@ -202,10 +204,8 @@ class GameWorld
                     }
                     gameState = GameState.GameOver;
                 }
-                
-                }
-            }    
-        }     
+        }    
+    }     
     
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
@@ -218,11 +218,15 @@ class GameWorld
         if (gameState == GameState.Playing)
         {
             grid.Draw(gameTime, spriteBatch);
-            blocks.Draw(gameTime, spriteBatch, i, Vector2.Zero);
-            reserve.Draw(gameTime, spriteBatch, i2, new Vector2(9.5f * TetrisGrid.cellwidth, 4 * TetrisGrid.cellheight));
+            blocks.Draw(gameTime, spriteBatch, i, i2, new Vector2(9.5f * TetrisGrid.cellwidth, 4 * TetrisGrid.cellheight));
             spriteBatch.DrawString(font, "Level: " + level, new Vector2(13 * TetrisGrid.cellwidth, 0.5f * TetrisGrid.cellheight), Color.Black);
             spriteBatch.DrawString(font, "Score: " + score, new Vector2(13 * TetrisGrid.cellwidth, 1.5f * TetrisGrid.cellheight), Color.Black);
             spriteBatch.DrawString(font, "Next block:", new Vector2(13 * TetrisGrid.cellwidth, 2.5f * TetrisGrid.cellheight), Color.Black);
+        }
+
+        if (gameState == GameState.GameOver)
+        {
+            spriteBatch.Draw(backButton, gameOver.BackRect, Color.White);
         }
         spriteBatch.End();
     }

@@ -62,7 +62,6 @@ class TetrisBlock
         if (inputHelper.KeyPressed(Keys.Up))                            //Roteert blokje
         {
             RotateRight();
-
         }
         else if (inputHelper.KeyPressed(Keys.Down))                     //Beweegt naar beneden
         {
