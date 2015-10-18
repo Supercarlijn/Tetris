@@ -51,36 +51,36 @@ class GameWorld
         i2 = (int)random.Next(7) + 1;
         blockcounter = 1;
 
-        blocks = new BlockList(block);          //Voegen de verschillende blockobjecten toe aan de lijst
-        block1 = new Block1(block);
+        blocks = new BlockList(block, Content);          //Voegen de verschillende blockobjecten toe aan de lijst
+        block1 = new Block1(block, Content);
         blocks.Add(block1, 1);
-        block2 = new Block2(block);
+        block2 = new Block2(block, Content);
         blocks.Add(block2, 2);
-        block3 = new Block3(block);
+        block3 = new Block3(block, Content);
         blocks.Add(block3, 3);
-        block4 = new Block4(block);
+        block4 = new Block4(block, Content);
         blocks.Add(block4, 4);
-        block5 = new Block5(block);
+        block5 = new Block5(block, Content);
         blocks.Add(block5, 5);
-        block6 = new Block6(block);
+        block6 = new Block6(block, Content);
         blocks.Add(block6, 6);
-        block7 = new Block7(block);
+        block7 = new Block7(block, Content);
         blocks.Add(block7, 7);
 
         //Voegen de verschillende blockobjecten toe aan een tweede lijst voor het tekenen van het volgende blokje
-        block1res = new Block1(block);
+        block1res = new Block1(block, Content);
         blocks.AddToReserve(block1res, 1);
-        block2res = new Block2(block);
+        block2res = new Block2(block, Content);
         blocks.AddToReserve(block2res, 2);
-        block3res = new Block3(block);
+        block3res = new Block3(block, Content);
         blocks.AddToReserve(block3res, 3);
-        block4res = new Block4(block);
+        block4res = new Block4(block, Content);
         blocks.AddToReserve(block4res, 4);
-        block5res = new Block5(block);
+        block5res = new Block5(block, Content);
         blocks.AddToReserve(block5res, 5);
-        block6res = new Block6(block);
+        block6res = new Block6(block, Content);
         blocks.AddToReserve(block6res, 6);
-        block7res = new Block7(block);
+        block7res = new Block7(block, Content);
         blocks.AddToReserve(block7res, 7);
 
         options = new Options(block, reset, width, height, font, blocks);

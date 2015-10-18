@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 class BlockList : TetrisBlock
 {
     public Dictionary<int, TetrisBlock> blocks;
     public Dictionary<int, TetrisBlock> reserve; //Tweede dictionary voor het tekenen van het volgende blokje naast speelveld
 
-    public BlockList(Texture2D sprite) :base(sprite)
+    public BlockList(Texture2D sprite, ContentManager content) :base(sprite, content)
     {
         blocks = new Dictionary<int, TetrisBlock>();
         reserve = new Dictionary<int, TetrisBlock>();

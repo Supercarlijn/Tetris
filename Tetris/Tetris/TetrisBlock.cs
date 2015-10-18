@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 
 class TetrisBlock
 {
@@ -12,8 +14,9 @@ class TetrisBlock
     protected Color color;
     TimeSpan timelimit;                                     //De tijdlimiet van hoe lang een blokje stil mag blijven staan
     Texture2D sprite;
+    SoundEffect blockplaced, fullrow;
 
-    public TetrisBlock(Texture2D sprite)
+    public TetrisBlock(Texture2D sprite, ContentManager Content)
     {
         this.sprite = sprite;
         blockForm = new Color[4, 4];
@@ -22,6 +25,7 @@ class TetrisBlock
             for (int j = 0; j < 4; j++)
                 blockForm[i, j] = Color.White;
         timelimit = TimeSpan.FromSeconds(0.9);
+        fullrow = Content.Load<SoundEffect>("FullRow");
     }
 
     //Deze methode moet aangeroepen worden voor elk blokje bij het sluiten van options, int k is daar dan 4 (voor elk blokje)
@@ -149,6 +153,7 @@ class TetrisBlock
                 TetrisGrid.ClearRow(i);
                 TetrisGrid.MoveRows(i);
                 GameWorld.Score += 10;
+                fullrow.Play();
             }
     }
 
