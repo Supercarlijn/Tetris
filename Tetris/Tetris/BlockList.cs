@@ -6,16 +6,18 @@ class BlockList : TetrisBlock
 {
     public Dictionary<int, TetrisBlock> blocks;
 
-    public BlockList(Texture2D sprite) :base(null, sprite)
+    public BlockList(Texture2D sprite) :base(sprite)
     {
         blocks = new Dictionary<int, TetrisBlock>();
     }
 
+    //Deze methode voegt objecten toe aan onze Dictionary
     public void Add(TetrisBlock block, int id)
     {
         blocks.Add(id, block);
     }
 
+    //Deze methode zoekt naar een object met een gegeven id
     public TetrisBlock Find(int id)
     {
         if (blocks.ContainsKey(id))
@@ -39,9 +41,9 @@ class BlockList : TetrisBlock
         blocks[i].Update(gameTime);
     }
 
-    public void Draw(GameTime gameTime, SpriteBatch spriteBatch, int i)
+    public void Draw(GameTime gameTime, SpriteBatch spriteBatch, int i, Vector2 blockFoPos)
     {
-        blocks[i].Draw(gameTime, spriteBatch);
+        blocks[i].Draw(gameTime, spriteBatch, blockFoPos);
     }
 
     public void Reset(int i)

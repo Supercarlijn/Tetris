@@ -8,12 +8,12 @@ class TetrisGrid
     Texture2D gridblock;                        //Het blokje waar het speelveld uit bestaat
     Vector2 position;                           //De positie van het grid
     public static int cellwidth, cellheight;    //De afmetingen van één cel in grid
-    static Rectangle field;
+    static Rectangle field;                     //De grenzen van het speelveld
 
     public TetrisGrid(Texture2D b)
     {
         gridblock = b;
-        position = Vector2.Zero;
+        position = Vector2.Zero;                //Positie van het speelveld
         cellwidth = gridblock.Width;
         cellheight = gridblock.Height;
 
@@ -47,7 +47,7 @@ class TetrisGrid
         return false;
     }
 
-    //Controleert of een blokje verplaatst had mogen worden, true staat hier voor dat het niet had gemogen.
+    //Controleert of een blokje verplaatst had mogen worden of dat er al een blokje was; true staat hier voor dat het niet had gemogen.
     public static bool CheckPlayField (Vector2 blockFormPosition, Color[,] blockForm, Color color)
     {
         for (int i = 0; i< 4; i++)
@@ -86,20 +86,20 @@ class TetrisGrid
     //Controleert of een rij vol is en verwijdert moet worden
     public static bool RowFull(int i)
     {
-        for (int j = 0; j < 12; j++)    //Gaat alle kolommen van de rij af
+        for (int j = 0; j < 12; j++)    //Gaat alle kolommen van de gegeven rij i af
         {
-            if (occupied[i, j] != Color.White)  //Kijkt of die plek bezet is
+            if (occupied[i, j] != Color.White)  //Kijkt of er een plek bezet is in de rij
             {
                 if (j == 11)                    //Als alle plekken bezet zijn, geeft methode true terug
                     return true;
-                continue;                       //Gaat door naar volgende j om te controleren
+                continue;
             }
-            break;                              //Als een plek niet bezet is, wordt de loop gestopt en geeft methode false terug
+            break;                              //Als een plek niet bezet is, wordt de loop gestopt, want de rij is niet vol
         }
         return false;
     }
 
-    //Verwijdert de rij
+    //Verwijdert de gegeven rij i
     public static void ClearRow(int i)
     {
         for (int j = 0; j < 12; j++)    //Gaat alle kolommen van de rij af
@@ -114,16 +114,6 @@ class TetrisGrid
         for (int i = row - 1; i >= 0; i--)              //Kopieert de rij van onder naar boven
             for (int j = 0; j < 12; j++)
                 occupied[i+1, j] = occupied[i, j];
-    }
-
-    public int Width
-    {
-        get { return 12; }
-    }
-
-    public int Height
-    {
-        get { return 20; }
     }
 
     public void Clear()
@@ -141,5 +131,15 @@ class TetrisGrid
     public Color[,] Occupied
     {
         get { return occupied; }
+    }
+
+    public int Width
+    {
+        get { return 12; }
+    }
+
+    public int Height
+    {
+        get { return 20; }
     }
 }
